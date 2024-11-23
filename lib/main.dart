@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mqh_rommel/presentation/authenticate/splash_screen.dart';
 import 'package:mqh_rommel/presentation/screens/home_screen.dart';
 
 void main() {
@@ -18,7 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(title: 'Manos Que Hablan'),
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const HomeScreen(title: 'Manos Que Hablan'),
+      },
+      initialRoute: '/',
+      //home: const HomeScreen(title: 'Manos Que Hablan'),
     );
   }
 }
+
