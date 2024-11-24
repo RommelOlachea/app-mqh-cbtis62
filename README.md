@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # mqh_rommel
 
 A new Flutter project.
@@ -14,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# app-mqh-cbtis62
+Proyecto en flutter para enseñar lenguaje a señas para estudiantes de la EMS
+>>>>>>> 93fe3420c8777745030b6886e0f92ea6c157411f
