@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:go_router/go_router.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -14,8 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //con microtask se asegura que el Future se ejecute después de que se haya completado el build
     Future.microtask(() {
       Timer(const Duration(milliseconds: 3500), () async {
-        Navigator.pushReplacementNamed(
-          context, '/home');        
+        context.replace('/home');
       });
     });
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mqh_rommel/presentation/authenticate/splash_screen.dart';
-import 'package:mqh_rommel/presentation/screens/home_screen.dart';
+import 'package:mqh_rommel/config/router/app_router.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -12,19 +12,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/home': (context) => const HomeScreen(title: 'Manos Que Hablan'),
-      },
-      initialRoute: '/',
-      //home: const HomeScreen(title: 'Manos Que Hablan'),
+      routerConfig: appRouter,     
     );
   }
 }
