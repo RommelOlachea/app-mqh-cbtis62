@@ -1,31 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:video_player/video_player.dart';
 import 'dart:async';
 
-import 'package:go_router/go_router.dart';
-
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/videos/bienvenida.mp4')
+      ..initialize().then((_) {
+        setState(() {
+          _controller.play();
+          _controller.setLooping(false);
+          _controller.setVolume(0.0);
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    //con microtask se asegura que el Future se ejecute después de que se haya completado el build
+    // Asegurar que el Future se ejecute después de build
     Future.microtask(() {
       Timer(const Duration(milliseconds: 3500), () async {
         context.replace('/home');
       });
     });
 
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'Este es el splash screen',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Video en el fondo
+          Positioned.fill(
+            child: _controller.value.isInitialized
+                ? VideoPlayer(_controller)
+                : Center(child: CircularProgressIndicator()),
+          ),
+          // Gradiente oscuro
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.8),
+                    Colors.transparent,
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.center,
+                ),
+              ),
+            ),
+          ),
+          // Texto centrado horizontalmente y hacia la parte inferior
+          Positioned(
+            bottom: 100, // Espaciado desde la parte inferior
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Text(
+                "Hola Bienvenido!",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
