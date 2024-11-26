@@ -4,7 +4,7 @@ class HomeScreen extends StatelessWidget {
   final String title;
 
   // Constructor que recibe el título como un parámetro nombrado
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  const HomeScreen({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
