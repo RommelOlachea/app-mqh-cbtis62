@@ -20,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
           _controller.play();
           _controller.setLooping(false);
           _controller.setVolume(0.0);
+          
         });
       });
   }
@@ -31,56 +32,65 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // Asegurar que el Future se ejecute después de build
-    Future.microtask(() {
-      Timer(const Duration(milliseconds: 3500), () async {
-        context.replace('/home');
-      });
+Widget build(BuildContext context) {
+  // Asegurar que el Future se ejecute después de build
+  Future.microtask(() {
+    Timer(const Duration(milliseconds: 3500), () async {
+      context.replace('/home');
     });
+  });
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Video en el fondo
+  return Scaffold(
+    body: Stack(
+      children: [
+        // Video en el fondo
+        if (_controller.value.isInitialized) ...[
           Positioned.fill(
-            child: _controller.value.isInitialized
-                ? VideoPlayer(_controller)
-                : Center(child: CircularProgressIndicator()),
-          ),
-          // Gradiente oscuro
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.8),
-                    Colors.transparent,
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.center,
-                ),
+            child: FittedBox(
+              fit: BoxFit.cover, // Ajusta el video sin distorsionarlo
+              child: SizedBox(
+                width: _controller.value.size.width,
+                height: _controller.value.size.height,
+                child: VideoPlayer(_controller),
               ),
             ),
           ),
-          // Texto centrado horizontalmente y hacia la parte inferior
-          Positioned(
-            bottom: 100, // Espaciado desde la parte inferior
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Text(
-                "Hola Bienvenido!",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+        ] else
+          const Center(child: CircularProgressIndicator()),
+
+        // Gradiente oscuro
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.8),
+                  Colors.transparent,
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.center,
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+        // Texto centrado horizontalmente y hacia la parte inferior
+        const Positioned(
+          bottom: 100, // Espaciado desde la parte inferior
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Text(
+              "Hola Bienvenido!",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }
