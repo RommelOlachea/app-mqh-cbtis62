@@ -6,11 +6,13 @@ Proyecto en flutter para el aprendizaje de lenguaje de señas en la EMS.
 
 **Para cambiar el icono de la aplicacion**
 ...
+agregar paquete flutter_launcher_icons
 flutter pub run flutter\_launcher\_icons
 ...
 
 **Para cambiar el nombre del paquete de la aplicacion:**
 ...
+agregar paquete change_app_package_name
 flutter pub run change\_app\_package\_name:main com.rommelolachea.mqhcbtis62
 ...
 
@@ -23,7 +25,7 @@ Encuentra la línea que define el atributo android:label dentro del elemento <ap
     android:icon="@mipmap/ic_launcher">
 
 Cambia el valor de android:label al nombre deseado. Por ejemplo:
-    android:label="NuevoNombre"
+    android:label="MQH"
 
 Guarda el archivo y reconstruye el proyecto:
     flutter clean
@@ -36,7 +38,7 @@ Abre el archivo ios/Runner/Info.plist.
 Busca la clave CFBundleName. Si no existe, agrégala:
 
 <key>CFBundleName</key>
-<string>NuevoNombre</string>
+<string>MQH</string>
 
 Guarda el archivo y asegúrate de que los cambios se reflejen al compilar el proyecto:
 
