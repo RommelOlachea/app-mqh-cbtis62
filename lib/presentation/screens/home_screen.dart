@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mqh_rommel/presentation/screens/demo1_screen.dart';
-import 'package:mqh_rommel/presentation/screens/demo2_screen.dart';
-import 'package:mqh_rommel/presentation/screens/demo_screen.dart';
+import 'package:mqh_rommel/presentation/screens/levels_screen.dart';
+import 'package:mqh_rommel/presentation/screens/progress_screen.dart';
+import 'package:mqh_rommel/presentation/screens/topics_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,9 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Lista de las páginas que se mostrarán en el IndexedStack
   final List<Widget> _pages = [
-    DemoScreen(),
-    DemoScreen1(),
-    DemoScreen2(),
+    const TopicsScreen(),
+    const LevelsScreen(),
+    const ProgressScreen(),
   ];
 
   // Cambiar el índice seleccionado
@@ -46,19 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Inicio',
+              icon: Icon(Icons.book_outlined),
+              activeIcon: Icon(Icons.book),
+              label: 'Temas',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              activeIcon: Icon(Icons.search),
-              label: 'Buscar',
+              icon: Icon(Icons.graphic_eq),
+              activeIcon: Icon(Icons.graphic_eq),
+              label: 'Niveles',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
-              label: 'Perfil',
+              label: 'Progreso',
             ),
           ],
           currentIndex: _selectedIndex,

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class DemoScreen2 extends StatelessWidget {
-  const DemoScreen2({super.key});
+class TopicsScreen extends StatelessWidget {
+  const TopicsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Progreso del LSM'),
+        title: const Text('MQH TEMARIO'),
       ),
       body: const Center(
-        child: Text('Progreso del Lenguaje de Señas Mexicano'),
+        child: Text('Temas a elegir'),
       ),
     );
   }
