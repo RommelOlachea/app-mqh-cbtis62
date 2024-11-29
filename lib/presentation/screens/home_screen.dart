@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mqh_rommel/presentation/screens/levels_screen.dart';
-import 'package:mqh_rommel/presentation/screens/progress_screen.dart';
-import 'package:mqh_rommel/presentation/screens/topics_screen.dart';
+import 'package:mqh_rommel/presentation/screens/screens.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -51,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Temas',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.graphic_eq),
-              activeIcon: Icon(Icons.graphic_eq),
+              icon: Icon(Icons.bar_chart_rounded),
+              activeIcon: Icon(Icons.bar_chart_rounded),
               label: 'Niveles',
             ),
             BottomNavigationBarItem(

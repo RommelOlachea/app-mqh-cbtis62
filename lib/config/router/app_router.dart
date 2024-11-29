@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/presentation/authenticate/authenticate.dart';
-import 'package:mqh_rommel/presentation/screens/topics_screen.dart';
 import '../../presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
