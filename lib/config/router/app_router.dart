@@ -18,17 +18,17 @@ final appRouter = GoRouter(
     GoRoute(
       name: 'topics',      
       path: '/topics',
-      builder: (context, state) => const TopicsScreen(),
+      builder: (context, state) =>  TopicsScreen(),
     ),    
     GoRoute(
       name: 'levesl',      
       path: '/levels',
-      builder: (context, state) => const TopicsScreen(),
+      builder: (context, state) => const LevelsScreen(),
     ),    
     GoRoute(
       name: 'progress',      
       path: '/progress',
-      builder: (context, state) => const TopicsScreen(),
+      builder: (context, state) => const ProgressScreen(),
     ),    
   ],
 );
