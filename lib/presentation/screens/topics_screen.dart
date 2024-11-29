@@ -27,18 +27,34 @@ class TopicsScreen extends StatelessWidget {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Hola Litzy!',
-                          style: TextStyle(
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                      children: [
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(
+                              fontSize: 28.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              letterSpacing: 1.2,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Hola, ',
+                              ),
+                              TextSpan(
+                                text: 'Litzy',
+                                style: TextStyle(
+                                  color: Color(0xFFFFD54F), // Dorado claro
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' 👋',
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Enriquese el aprendizaje en LSM',
+                        const SizedBox(height: 4),
+                        const Text(
+                          'Enriquece el aprendizaje en LSM',
                           style: TextStyle(
                             fontSize: 14.0,
                             color: Colors.white70,
@@ -70,25 +86,25 @@ class TopicsScreen extends StatelessWidget {
                         title: 'Abecedario',
                         description: 'Aprende el abecedario en LSM.',
                         icon: Icons.abc,
-                        backgroundColor: Colors.white,
+                        gradientColors: [Color(0xFFFFA726), Color(0xFFFF7043)], // Naranja
                       ),
                       _AdCategoryCard(
                         title: 'Números',
-                        description: 'Numeros del 1 al 20 en LSM.',
+                        description: 'Números del 1 al 20 en LSM.',
                         icon: Icons.numbers,
-                        backgroundColor: Colors.white,
+                        gradientColors: [Color(0xFF66BB6A), Color(0xFF43A047)], // Verde menta
                       ),
                       _AdCategoryCard(
-                        title: 'Dias de la semana',
-                        description: 'Dias de la semana en LSM.',
+                        title: 'Días de la semana',
+                        description: 'Días de la semana en LSM.',
                         icon: Icons.calendar_today,
-                        backgroundColor: Colors.white,
+                        gradientColors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Púrpura
                       ),
                       _AdCategoryCard(
                         title: 'Meses del año',
                         description: 'Meses del año en LSM.',
                         icon: Icons.calendar_view_month,
-                        backgroundColor: Colors.white,
+                        gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)], // Coral
                       ),
                     ],
                   ),
@@ -141,21 +157,25 @@ class _AdCategoryCard extends StatelessWidget {
   final String title;
   final String description;
   final IconData icon;
-  final Color backgroundColor;
+  final List<Color> gradientColors;
 
   const _AdCategoryCard({
     Key? key,
     required this.title,
     required this.description,
     required this.icon,
-    required this.backgroundColor,
+    required this.gradientColors,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor,
+        gradient: LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
@@ -171,11 +191,12 @@ class _AdCategoryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.orange, size: 36.0),
+          Icon(icon, color: Colors.white, size: 36.0),
           const SizedBox(height: 12.0),
           Text(
             title,
             style: const TextStyle(
+              color: Colors.white,
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
@@ -184,8 +205,8 @@ class _AdCategoryCard extends StatelessWidget {
           Text(
             description,
             style: const TextStyle(
+              color: Colors.white70,
               fontSize: 12.0,
-              color: Colors.grey,
             ),
           ),
         ],
