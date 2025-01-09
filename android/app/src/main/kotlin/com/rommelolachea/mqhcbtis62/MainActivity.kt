@@ -1,4 +1,4 @@
-package com.example.mqh_rommel
+package com.rommelolachea.mqhcbtis62
 
 import io.flutter.embedding.android.FlutterActivity
 
