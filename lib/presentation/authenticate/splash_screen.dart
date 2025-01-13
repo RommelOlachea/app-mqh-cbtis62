@@ -36,7 +36,7 @@ Widget build(BuildContext context) {
   // Asegurar que el Future se ejecute después de build
   Future.microtask(() {
     Timer(const Duration(milliseconds: 4000), () async {
-      context.replace('/home');
+      context.replace('/levels');
     });
   });
 

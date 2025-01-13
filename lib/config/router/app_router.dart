@@ -21,7 +21,7 @@ final appRouter = GoRouter(
       builder: (context, state) =>  TopicsScreen(),
     ),    
     GoRoute(
-      name: 'levesl',      
+      name: 'levels',      
       path: '/levels',
       builder: (context, state) => const LevelsScreen(),
     ),    
