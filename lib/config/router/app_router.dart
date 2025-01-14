@@ -11,6 +11,16 @@ final appRouter = GoRouter(
       builder: (context, state) => SplashScreen(),
     ),    
     GoRoute(
+      name: 'login',      
+      path: '/login',
+      builder: (context, state) => LoginScreen(),
+    ),    
+    GoRoute(
+      name: 'register',      
+      path: '/register',
+      builder: (context, state) => RegisterScreen(),
+    ),    
+    GoRoute(
       name: 'home',      
       path: '/home',
       builder: (context, state) =>  HomeScreen(),
