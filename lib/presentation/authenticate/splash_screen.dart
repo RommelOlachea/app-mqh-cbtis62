@@ -35,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
 Widget build(BuildContext context) {
   // Asegurar que el Future se ejecute después de build
   Future.microtask(() {
-    Timer(const Duration(milliseconds: 3500), () async {
-      context.replace('/home');
+    Timer(const Duration(milliseconds: 4140), () async {
+      context.replace('/login');
     });
   });
 

@@ -11,6 +11,22 @@ final appRouter = GoRouter(
       builder: (context, state) => SplashScreen(),
     ),    
     GoRoute(
+      name: 'login',
+      path: '/login',
+      builder: (context, state) => LoginScreen(),
+      ),
+    GoRoute(
+      name: 'register',
+      path: '/register',
+      builder: (context, state) => RegisterScreen(),
+      ),
+    GoRoute(
+      name: 'forgotpassword',
+      path: '/forgotpassword',
+      builder: (context, state) => ForgotPasswordScreen(),
+      ),
+    
+    GoRoute(
       name: 'home',      
       path: '/home',
       builder: (context, state) => const HomeScreen(title: 'Bienvenido a MQH',),
