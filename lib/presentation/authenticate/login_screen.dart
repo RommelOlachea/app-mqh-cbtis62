@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class RegisterScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController nameController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  bool rememberMe = false;
+  bool passwordVisible = false; // Control de visibilidad de la contraseña
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool passwordVisible = false; // Control de visibilidad para contraseña
-  bool confirmPasswordVisible = false; // Control de visibilidad para confirmar contraseña
-
-  void _validateAndRegister() {
+  void _validateAndSubmit() {
     if (_formKey.currentState!.validate()) {
-      // Realizar acción de registro
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Registro exitoso')),
-      );
+      // Realizar acción de inicio de sesión
+      context.go('/home');
     }
   }
 
@@ -83,13 +77,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Título "Registro de Usuario" centrado
+              // Título "Iniciar sesión" centrado y en color azul rey
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Registro de Usuario',
+                    'Iniciar sesión',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -106,32 +100,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      // Campo para ID Usuario
-                      TextFormField(
-                        controller: nameController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person), // Ícono de usuario
-                          labelText: 'ID Usuario',
-                          hintText: 'Nombre de Usuario',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese su nombre';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      // Campo para Email
+                      // Campo para email
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.email), // Ícono de email
                           labelText: 'Email',
-                          hintText: 'Introduzca su email',
+                          hintText: 'Ingrese su email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -141,20 +116,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return 'Por favor ingrese su email';
                           } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
                               .hasMatch(value)) {
-                            return 'Introduzca un email válido';
+                            return 'Email incorrecto';
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Campo para Contraseña
+                      // Campo para contraseña
                       TextFormField(
                         controller: passwordController,
                         obscureText: !passwordVisible,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock), // Ícono de candado
+                          prefixIcon:
+                              const Icon(Icons.lock), // Ícono de candado
                           labelText: 'Contraseña',
-                          hintText: 'Introduzca su contraseña',
+                          hintText: 'Ingrese su contraseña',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -181,66 +157,104 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Campo para Confirmar Contraseña
-                      TextFormField(
-                        controller: confirmPasswordController,
-                        obscureText: !confirmPasswordVisible,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock), // Ícono de candado
-                          labelText: 'Confirmar Contraseña',
-                          hintText: 'Confirme su contraseña',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      // Checkbox y enlace de recuperación de contraseña
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: rememberMe,
+                                onChanged: (value) {
+                                  setState(() {
+                                    rememberMe = value!;
+                                  });
+                                },
+                              ),
+                              const Text(
+                                'Recuérdame',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
                           ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              confirmPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
+                          TextButton(
                             onPressed: () {
-                              setState(() {
-                                confirmPasswordVisible = !confirmPasswordVisible;
-                              });
+                              context.go('/forgotpassword'); // Navegar a recuperar contraseña
                             },
+                            child: const Text(
+                              '¿Olvidaste tu contraseña?',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF6E78F7),
+                              ),
+                            ),
                           ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor confirme su contraseña';
-                          } else if (value != passwordController.text) {
-                            return 'Las contraseñas no coinciden';
-                          }
-                          return null;
-                        },
+                        ],
                       ),
                       const SizedBox(height: 15),
-                      // Botón de registro
+                      // Botón de inicio de sesión
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: _validateAndRegister,
+                          onPressed: _validateAndSubmit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0D47A1), // Azul rey
+                            backgroundColor:
+                                const Color(0xFF0D47A1), // Azul rey
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                           child: const Text(
-                            'Registrar',
+                            'Iniciar sesión',
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Texto para iniciar sesión si ya tiene cuenta
+                      // Línea divisoria
+                      Row(
+                        children: const [
+                          Expanded(
+                            child: Divider(thickness: 1),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Text('O inicia sesión con'),
+                          ),
+                          Expanded(
+                            child: Divider(thickness: 1),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      // Iconos de redes sociales
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon:
+                                const Icon(Icons.facebook, color: Colors.blue),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.apple, color: Colors.black),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.email, color: Colors.red),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      // Texto para registrarse si no tiene cuenta
                       TextButton(
                         onPressed: () {
-                          context.go('/login');
+                          context.push('/register'); // Navegar a registro
                         },
                         child: const Text(
-                          '¿Ya tienes una cuenta? Inicia sesión',
+                          '¿No tienes cuenta? Regístrate',
                           style: TextStyle(color: Color(0xFF6E78F7)),
                         ),
                       ),

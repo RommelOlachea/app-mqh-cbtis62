@@ -21,6 +21,11 @@ final appRouter = GoRouter(
       builder: (context, state) => RegisterScreen(),
     ),    
     GoRoute(
+      name: 'forgotpassword',      
+      path: '/forgotpassword',
+      builder: (context, state) => ForgotPasswordScreen(),
+    ),    
+    GoRoute(
       name: 'home',      
       path: '/home',
       builder: (context, state) =>  HomeScreen(),
