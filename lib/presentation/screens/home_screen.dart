@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // Lista de las páginas que se mostrarán en el IndexedStack
   final List<Widget> _pages = [
     TopicsScreen(),
-    const LevelsScreen(),
+    LevelsScreen(),
     const ProgressScreen(),
   ];
 

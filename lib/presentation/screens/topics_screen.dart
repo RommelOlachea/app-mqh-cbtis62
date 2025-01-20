@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TopicsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF03A9F4), // Azul más intenso
-              Color(0xFFB3E5FC), // Azul celeste claro
-            ],
+            colors: [Colors.blue[900]!, Colors.blueAccent],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -41,7 +39,7 @@ class TopicsScreen extends StatelessWidget {
                                 text: 'Hola, ',
                               ),
                               TextSpan(
-                                text: 'Litzy',
+                                text: 'Romina',
                                 style: TextStyle(
                                   color: Color(0xFFFFD54F), // Dorado claro
                                 ),
@@ -63,13 +61,10 @@ class TopicsScreen extends StatelessWidget {
                       ],
                     ),
                     // User Avatar
-                    ClipOval(
-                      child: Image.network(
-                        'https://www.cecaes.edu.mx/blog/wp-content/uploads/2020/05/3-min.png', // URL de ejemplo para el avatar
-                        width: 48,
-                        height: 48,
-                        fit: BoxFit.cover,
-                      ),
+                    const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage:
+                          AssetImage('assets/profile/icono_perfil4.png'),
                     ),
                   ],
                 ),
@@ -82,29 +77,33 @@ class TopicsScreen extends StatelessWidget {
                     crossAxisSpacing: 16.0,
                     mainAxisSpacing: 16.0,
                     children: const [
-                      _AdCategoryCard(
+                      _AdTopic(
                         title: 'Abecedario',
                         description: 'Aprende el abecedario en LSM.',
                         icon: Icons.abc,
-                        gradientColors: [Color(0xFFFFA726), Color(0xFFFF7043)], // Naranja
+                        gradientColors: [Color(0xFFFFA726), Color(0xFFFF7043)],
+                        route: '/alphabet',
                       ),
-                      _AdCategoryCard(
+                      _AdTopic(
                         title: 'Números',
                         description: 'Números del 1 al 20 en LSM.',
                         icon: Icons.numbers,
-                        gradientColors: [Color(0xFF66BB6A), Color(0xFF43A047)], // Verde menta
+                        gradientColors: [Color(0xFF66BB6A), Color(0xFF43A047)],
+                        route: '/numbers',
                       ),
-                      _AdCategoryCard(
+                      _AdTopic(
                         title: 'Días de la semana',
                         description: 'Días de la semana en LSM.',
                         icon: Icons.calendar_today,
-                        gradientColors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Púrpura
+                        gradientColors: [Color(0xFFBA68C8), Color(0xFF8E24AA)],
+                        route: '/development',
                       ),
-                      _AdCategoryCard(
+                      _AdTopic(
                         title: 'Meses del año',
                         description: 'Meses del año en LSM.',
                         icon: Icons.calendar_view_month,
-                        gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)], // Coral
+                        gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)],
+                        route: '/development',
                       ),
                     ],
                   ),
@@ -129,17 +128,20 @@ class TopicsScreen extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const [
-                      _SpecialOfferCard(
+                      _AddCategory(
                         title: "Frases dentro del salón!",
-                        backgroundColor: Colors.blueAccent,
+                        backgroundColor: Colors.green,
+                        route: '/development',
                       ),
-                      _SpecialOfferCard(
+                      _AddCategory(
                         title: "Instrucciones y preguntas escolares",
                         backgroundColor: Colors.orangeAccent,
+                        route: '/development',
                       ),
-                      _SpecialOfferCard(
+                      _AddCategory(
                         title: "Glosario de materias!",
                         backgroundColor: Colors.purpleAccent,
+                        route: '/development',
                       ),
                     ],
                   ),
@@ -153,117 +155,128 @@ class TopicsScreen extends StatelessWidget {
   }
 }
 
-class _AdCategoryCard extends StatelessWidget {
+class _AdTopic extends StatelessWidget {
   final String title;
   final String description;
   final IconData icon;
   final List<Color> gradientColors;
+  final String route;
 
-  const _AdCategoryCard({
+  const _AdTopic({
     Key? key,
     required this.title,
     required this.description,
     required this.icon,
     required this.gradientColors,
+    required this.route,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: gradientColors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+    return GestureDetector(
+      onTap: () {
+        GoRouter.of(context).push(route);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: gradientColors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-        borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: Colors.white, size: 36.0),
-          const SizedBox(height: 12.0),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: Colors.white, size: 36.0),
+            const SizedBox(height: 12.0),
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            description,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 12.0,
+            const SizedBox(height: 8.0),
+            Text(
+              description,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 12.0,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class _SpecialOfferCard extends StatelessWidget {
+class _AddCategory extends StatelessWidget {
   final String title;
   final Color backgroundColor;
+  final String route;
 
-  const _SpecialOfferCard({
+  const _AddCategory({
     Key? key,
     required this.title,
-    required this.backgroundColor,
+    required this.backgroundColor, required this.route,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16.0),
-      width: 240.0,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Descubre más',
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 14.0,
+    return GestureDetector(
+      onTap: () {GoRouter.of(context).push(route);},
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        width: 240.0,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
+          ],
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Descubre más',
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 14.0,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 8.0),
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

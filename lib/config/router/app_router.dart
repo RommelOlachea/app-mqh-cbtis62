@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/presentation/authenticate/authenticate.dart';
 import '../../presentation/screens/screens.dart';
+import '../../presentation/screens/topics/topics.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -38,12 +39,27 @@ final appRouter = GoRouter(
     GoRoute(
       name: 'levels',      
       path: '/levels',
-      builder: (context, state) => const LevelsScreen(),
+      builder: (context, state) => LevelsScreen(),
     ),    
     GoRoute(
       name: 'progress',      
       path: '/progress',
       builder: (context, state) => const ProgressScreen(),
+    ),    
+    GoRoute(
+      name: 'alphabet',      
+      path: '/alphabet',
+      builder: (context, state) =>  AlphabetScreen(),
+    ),    
+    GoRoute(
+      name: 'numbers',      
+      path: '/numbers',
+      builder: (context, state) =>  NumberScreen(),
+    ),    
+    GoRoute(
+      name: 'developement',      
+      path: '/development',
+      builder: (context, state) =>  const DevelopmentScreen(),
     ),    
   ],
 );

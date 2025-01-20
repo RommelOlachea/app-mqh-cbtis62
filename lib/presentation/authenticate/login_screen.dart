@@ -52,7 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottomRight: Radius.circular(30),
                         ),
                         child: Image.asset(
-                          'assets/icon/logo_icon.jpeg', // Asegúrate de usar la ruta correcta
+                          //'assets/icon/logo_icon.jpeg', // Asegúrate de usar la ruta correcta
+                          'assets/image/login2.jpg', // Asegúrate de usar la ruta correcta
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -218,10 +219,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Expanded(
                             child: Divider(thickness: 1),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text('O inicia sesión con'),
-                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          //   child: Text('O inicia sesión con'),
+                          // ),
                           Expanded(
                             child: Divider(thickness: 1),
                           ),
@@ -229,24 +230,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 20),
                       // Iconos de redes sociales
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon:
-                                const Icon(Icons.facebook, color: Colors.blue),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.apple, color: Colors.black),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.email, color: Colors.red),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     IconButton(
+                      //       onPressed: () {},
+                      //       icon:
+                      //           const Icon(Icons.facebook, color: Colors.blue),
+                      //     ),
+                      //     IconButton(
+                      //       onPressed: () {},
+                      //       icon: const Icon(Icons.apple, color: Colors.black),
+                      //     ),
+                      //     IconButton(
+                      //       onPressed: () {},
+                      //       icon: const Icon(Icons.email, color: Colors.red),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 20),
                       // Texto para registrarse si no tiene cuenta
                       TextButton(
