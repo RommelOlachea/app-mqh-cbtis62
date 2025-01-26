@@ -61,7 +61,7 @@ class _NumberScreenState extends State<NumberScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text(
-          'Abecedario LSM',
+          'Números LSM',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
