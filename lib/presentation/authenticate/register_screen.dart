@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -10,19 +11,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool passwordVisible = false; // Control de visibilidad para contraseña
-  bool confirmPasswordVisible = false; // Control de visibilidad para confirmar contraseña
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
-  void _validateAndRegister() {
+  bool passwordVisible = false;
+  bool confirmPasswordVisible = false;
+
+  // Genera un token JWT de prueba
+  //todo: generar un token JWT real, y aplicar el modelo de autenticación
+  String _generateDummyJwt() {
+    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dGVzdF91c3Vhcmlv.bXV5U2VjcmV0S2V5'; 
+  }
+
+  Future<void> _saveDataLocally() async {
     if (_formKey.currentState!.validate()) {
-      // Realizar acción de registro
+      final dummyJwtToken = _generateDummyJwt();
+
+      await _secureStorage.write(key: 'jwt_token', value: dummyJwtToken);
+      await _secureStorage.write(key: 'username', value: nameController.text);
+      await _secureStorage.write(key: 'email', value: emailController.text);
+      await _secureStorage.write(key: 'password', value: passwordController.text);
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Registro exitoso')),
+        const SnackBar(content: Text('Datos guardados exitosamente')),
       );
+
+      context.go('/dashboard');  // Redirigir después del registro
     }
   }
 
@@ -33,15 +49,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _hideKeyboard, // Detectar toque fuera del teclado
+      onTap: _hideKeyboard,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // AppBar con imagen de fondo y borde inferior invertido
               Container(
-                height: 280, // Mayor altura para el AppBar
+                height: 280,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
@@ -50,7 +65,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 child: Stack(
                   children: [
-                    // Imagen de fondo
                     Positioned.fill(
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
@@ -58,12 +72,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           bottomRight: Radius.circular(30),
                         ),
                         child: Image.asset(
-                          'assets/icon/logo_icon.jpeg', // Asegúrate de usar la ruta correcta
+                          'assets/icon/logo_icon.jpeg',
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    // Contenedor blanco para el borde inferior invertido
                     Positioned.fill(
                       child: Align(
                         alignment: Alignment.bottomCenter,
@@ -83,7 +96,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Título "Registro de Usuario" centrado
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Align(
@@ -93,24 +105,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D47A1), // Azul rey
+                      color: Color(0xFF0D47A1),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              // Formulario
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      // Campo para ID Usuario
                       TextFormField(
                         controller: nameController,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person), // Ícono de usuario
+                          prefixIcon: const Icon(Icons.person),
                           labelText: 'ID Usuario',
                           hintText: 'Nombre de Usuario',
                           border: OutlineInputBorder(
@@ -125,11 +135,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Campo para Email
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.email), // Ícono de email
+                          prefixIcon: const Icon(Icons.email),
                           labelText: 'Email',
                           hintText: 'Introduzca su email',
                           border: OutlineInputBorder(
@@ -139,20 +148,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor ingrese su email';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                             return 'Introduzca un email válido';
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Campo para Contraseña
                       TextFormField(
                         controller: passwordController,
                         obscureText: !passwordVisible,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock), // Ícono de candado
+                          prefixIcon: const Icon(Icons.lock),
                           labelText: 'Contraseña',
                           hintText: 'Introduzca su contraseña',
                           border: OutlineInputBorder(
@@ -160,9 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              passwordVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
@@ -181,12 +186,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Campo para Confirmar Contraseña
                       TextFormField(
                         controller: confirmPasswordController,
                         obscureText: !confirmPasswordVisible,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock), // Ícono de candado
+                          prefixIcon: const Icon(Icons.lock),
                           labelText: 'Confirmar Contraseña',
                           hintText: 'Confirme su contraseña',
                           border: OutlineInputBorder(
@@ -194,9 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              confirmPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
@@ -215,14 +217,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Botón de registro
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: _validateAndRegister,
+                          onPressed: _saveDataLocally,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0D47A1), // Azul rey
+                            backgroundColor: const Color(0xFF0D47A1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -234,7 +235,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Texto para iniciar sesión si ya tiene cuenta
                       TextButton(
                         onPressed: () {
                           context.go('/login');
