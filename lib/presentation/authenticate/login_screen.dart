@@ -22,10 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
       String? storedEmail = await _secureStorage.read(key: 'email');
       String? storedPassword = await _secureStorage.read(key: 'password');
 
-      if (storedEmail == emailController.text && storedPassword == passwordController.text) {
+      if (storedEmail == emailController.text &&
+          storedPassword == passwordController.text) {
         // Guardar la preferencia de "Recuérdame"
-        await _secureStorage.write(key: 'rememberme', value: rememberMe.toString());
-        
+        await _secureStorage.write(
+            key: 'rememberme', value: rememberMe.toString());
+
         context.go('/home'); // Redirigir al home
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -123,7 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor ingrese su email';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                              .hasMatch(value)) {
                             return 'Email incorrecto';
                           }
                           return null;
@@ -142,7 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
@@ -161,38 +166,44 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: rememberMe,
-                                onChanged: (value) {
-                                  setState(() {
-                                    rememberMe = value!;
-                                  });
-                                },
-                              ),
-                              const Text(
-                                'Recuérdame',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              context.push('/forgotpassword');
-                            },
-                            child: const Text(
-                              '¿Olvidaste tu contraseña?',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF6E78F7),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: rememberMe,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      rememberMe = value!;
+                                    });
+                                  },
+                                ),
+                                const Text(
+                                  'Recuérdame',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ],
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context.push('/forgotpassword');
+                              },
+                              child: const Text(
+                                '¿Olvidaste tu contraseña?',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xFF6E78F7),
+                                ),
+                                overflow: TextOverflow
+                                    .ellipsis, // Agrega puntos suspensivos si el texto se desborda
+                                maxLines: 1, // Limita el texto a una sola línea
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 15),
                       SizedBox(
@@ -220,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
 
-                    // Iconos de redes sociales
+                      // Iconos de redes sociales
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       //   children: [
@@ -239,7 +250,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     ),
                       //   ],
                       // ),
-
 
                       const SizedBox(height: 20),
                       TextButton(
