@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -7,16 +8,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool rememberMe = false;
-  bool passwordVisible = false; // Control de visibilidad de la contraseña
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
-  void _validateAndSubmit() {
+  bool rememberMe = false;
+  bool passwordVisible = false;
+
+  Future<void> _validateAndSubmit() async {
     if (_formKey.currentState!.validate()) {
-      // Realizar acción de inicio de sesión
-      context.go('/home');
+      // Obtener datos almacenados
+      String? storedEmail = await _secureStorage.read(key: 'email');
+      String? storedPassword = await _secureStorage.read(key: 'password');
+
+      if (storedEmail == emailController.text && storedPassword == passwordController.text) {
+        // Guardar la preferencia de "Recuérdame"
+        await _secureStorage.write(key: 'rememberme', value: rememberMe.toString());
+        
+        context.go('/home'); // Redirigir al home
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Credenciales incorrectas')),
+        );
+      }
     }
   }
 
@@ -27,15 +42,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _hideKeyboard, // Detectar toque fuera del teclado
+      onTap: _hideKeyboard,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // AppBar con imagen de fondo y borde inferior invertido
               Container(
-                height: 280, // Mayor altura para el AppBar
+                height: 280,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
@@ -44,7 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: Stack(
                   children: [
-                    // Imagen de fondo
                     Positioned.fill(
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
@@ -52,13 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottomRight: Radius.circular(30),
                         ),
                         child: Image.asset(
-                          //'assets/icon/logo_icon.jpeg', // Asegúrate de usar la ruta correcta
-                          'assets/image/login2.jpg', // Asegúrate de usar la ruta correcta
+                          'assets/image/login2.jpg',
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    // Contenedor blanco para el borde inferior invertido
                     Positioned.fill(
                       child: Align(
                         alignment: Alignment.bottomCenter,
@@ -78,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Título "Iniciar sesión" centrado y en color azul rey
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Align(
@@ -88,24 +98,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D47A1), // Azul rey
+                      color: Color(0xFF0D47A1),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              // Formulario
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      // Campo para email
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.email), // Ícono de email
+                          prefixIcon: const Icon(Icons.email),
                           labelText: 'Email',
                           hintText: 'Ingrese su email',
                           border: OutlineInputBorder(
@@ -115,21 +123,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor ingrese su email';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                             return 'Email incorrecto';
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Campo para contraseña
                       TextFormField(
                         controller: passwordController,
                         obscureText: !passwordVisible,
                         decoration: InputDecoration(
-                          prefixIcon:
-                              const Icon(Icons.lock), // Ícono de candado
+                          prefixIcon: const Icon(Icons.lock),
                           labelText: 'Contraseña',
                           hintText: 'Ingrese su contraseña',
                           border: OutlineInputBorder(
@@ -137,9 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              passwordVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
@@ -158,7 +161,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       const SizedBox(height: 15),
-                      // Checkbox y enlace de recuperación de contraseña
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -180,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              context.go('/forgotpassword'); // Navegar a recuperar contraseña
+                              context.push('/forgotpassword');
                             },
                             child: const Text(
                               '¿Olvidaste tu contraseña?',
@@ -193,15 +195,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      // Botón de inicio de sesión
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: _validateAndSubmit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color(0xFF0D47A1), // Azul rey
+                            backgroundColor: const Color(0xFF0D47A1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -213,23 +213,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Línea divisoria
                       Row(
                         children: const [
-                          Expanded(
-                            child: Divider(thickness: 1),
-                          ),
-                          // Padding(
-                          //   padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          //   child: Text('O inicia sesión con'),
-                          // ),
-                          Expanded(
-                            child: Divider(thickness: 1),
-                          ),
+                          Expanded(child: Divider(thickness: 1)),
+                          Expanded(child: Divider(thickness: 1)),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      // Iconos de redes sociales
+
+                    // Iconos de redes sociales
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       //   children: [
@@ -248,11 +239,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     ),
                       //   ],
                       // ),
+
+
                       const SizedBox(height: 20),
-                      // Texto para registrarse si no tiene cuenta
                       TextButton(
                         onPressed: () {
-                          context.push('/register'); // Navegar a registro
+                          context.push('/register');
                         },
                         child: const Text(
                           '¿No tienes cuenta? Regístrate',

@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 
-class ProgressScreen extends StatelessWidget {
+class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
+
+  @override
+  State<ProgressScreen> createState() => _ProgressScreenState();
+}
+
+class _ProgressScreenState extends State<ProgressScreen> {
+ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  String _username = ''; 
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    String? storedUsername = await _secureStorage.read(key: 'username');
+    setState(() {
+      _username = storedUsername ?? 'Usuario';
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +36,19 @@ class ProgressScreen extends StatelessWidget {
     // Cálculo del porcentaje de progreso
     double progress = currentExp / totalExpForNextLevel;
 
-    // Ruta de la foto de perfil
-    String profilePicturePath = 'assets/profile/icono_perfil4.png'; // Cambia esta ruta por la tuya
+    // Foto de perfil
+    String profilePicturePath = 'assets/profile/icono_perfil4.png'; 
+
+    // para gestionar el estado de la sesion
+    final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+
 
     return Scaffold(
       body: Container(
         // Fondo con gradiente
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue[900]!, Colors.blueAccent], // Colores del gradiente
+            colors: [Colors.blue[900]!, Colors.blueAccent], 
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -31,7 +59,7 @@ class ProgressScreen extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 400,
+                  height: 300,
                   color: Colors.white,
                 ),
                 // Imagen con bordes redondeados (foto de perfil)
@@ -43,17 +71,17 @@ class ProgressScreen extends StatelessWidget {
                     ),
                     child: Center(  // Aseguramos que esté centrado
                       child: SizedBox(
-                        width: 300,  // Define el tamaño deseado de la imagen
-                        height: 300, // Mantén el tamaño fijo
+                        width: 200,  // Define el tamaño deseado de la imagen
+                        height: 200, // Mantén el tamaño fijo
                         child: Image.asset(
                           profilePicturePath,
                           fit: BoxFit.cover, // La imagen debe cubrir todo el espacio
                           alignment: Alignment.center, // Centrado
                           // En caso de que la imagen no se cargue, mostrar el ícono de usuario
                           errorBuilder: (context, error, stackTrace) {
-                            return Icon(
+                            return const Icon(
                               Icons.account_circle, // Ícono de usuario si no se carga la imagen
-                              size: 300,
+                              size: 200,
                               color: Colors.grey,
                             );
                           },
@@ -68,20 +96,20 @@ class ProgressScreen extends StatelessWidget {
             Container(
               color: Colors.white, // Fondo blanco para la franja
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Nombre a la izquierda
                   Text(
-                    "Romina",
-                    style: TextStyle(
+                    _username, // Cambia este valor dinámicamente si es necesario
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
                   // Nivel a la derecha
-                  Text(
+                  const Text(
                     "Nivel: 5", // Cambia este valor dinámicamente si es necesario
                     style: TextStyle(
                       fontSize: 20,
@@ -116,7 +144,7 @@ class ProgressScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.grey[300], // Color de fondo (lo que falta)
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.black26,
                               blurRadius: 4,
@@ -130,7 +158,7 @@ class ProgressScreen extends StatelessWidget {
                         height: 12,
                         width: MediaQuery.of(context).size.width * progress, // Ancho basado en el porcentaje de progreso
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient:const  LinearGradient(
                             colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
                           ),
                           borderRadius: BorderRadius.circular(20),
@@ -158,9 +186,9 @@ class ProgressScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Exp: $currentExp/$totalExpForNextLevel",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: const TextStyle(fontSize: 16, color: Colors.white),
                       ),
-                      Text(
+                      const Text(
                         "Siguiente nivel",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
@@ -186,13 +214,13 @@ class ProgressScreen extends StatelessWidget {
                     Container(
                       width: 250,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient:const LinearGradient(
                           colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 8,
@@ -223,13 +251,13 @@ class ProgressScreen extends StatelessWidget {
                     Container(
                       width: 250,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 8,
@@ -239,7 +267,7 @@ class ProgressScreen extends StatelessWidget {
                       ),
                       child: TextButton.icon(
                         onPressed: () {
-                          // Acción al presionar el botón de "Editar foto de perfil"
+                          // Acción al presionar el botón de "Editar foto de perfil"c
                         },
                         icon: const Icon(
                           Icons.camera_alt,
@@ -247,6 +275,43 @@ class ProgressScreen extends StatelessWidget {
                         ),
                         label: const Text(
                           "Editar Foto de Perfil",
+                          style: TextStyle(
+                            color: Colors.white, // Texto blanco
+                            fontSize: 18, // Tamaño del texto
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: 250,
+                      decoration: BoxDecoration(
+                        gradient:const LinearGradient(
+                          colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(30), // Bordes redondeados
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: TextButton.icon(
+                        onPressed: () async {
+                          await _secureStorage.write(key: 'rememberme', value: false.toString());
+                          context.go('/login');
+                        },
+                        icon: const Icon(
+                          Icons.logout,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "Cerrar Sesión",
                           style: TextStyle(
                             color: Colors.white, // Texto blanco
                             fontSize: 18, // Tamaño del texto

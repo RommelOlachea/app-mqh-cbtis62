@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
-class TopicsScreen extends StatelessWidget {
+class TopicsScreen extends StatefulWidget {
+  @override
+  State<TopicsScreen> createState() => _TopicsScreenState();
+}
+
+class _TopicsScreenState extends State<TopicsScreen> {
+  
+final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  String _username = ''; 
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    String? storedUsername = await _secureStorage.read(key: 'username');
+    setState(() {
+      _username = storedUsername ?? 'Usuario';
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,24 +51,24 @@ class TopicsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
+                          text:  TextSpan(
+                            style:const TextStyle(
                               fontSize: 28.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               letterSpacing: 1.2,
                             ),
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text: 'Hola, ',
                               ),
                               TextSpan(
-                                text: 'Romina',
-                                style: TextStyle(
+                                text: _username,
+                                style: const TextStyle(
                                   color: Color(0xFFFFD54F), // Dorado claro
                                 ),
                               ),
-                              TextSpan(
+                              const TextSpan(
                                 text: ' 👋',
                               ),
                             ],
@@ -232,13 +256,16 @@ class _AddCategory extends StatelessWidget {
   const _AddCategory({
     Key? key,
     required this.title,
-    required this.backgroundColor, required this.route,
+    required this.backgroundColor,
+    required this.route,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {GoRouter.of(context).push(route);},
+      onTap: () {
+        GoRouter.of(context).push(route);
+      },
       child: Container(
         margin: const EdgeInsets.only(right: 16.0),
         width: 240.0,

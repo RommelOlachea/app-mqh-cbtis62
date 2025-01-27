@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         const SnackBar(content: Text('Datos guardados exitosamente')),
       );
 
-      context.go('/dashboard');  // Redirigir después del registro
+      context.go('/login');  // Redirigir después del registro
     }
   }
 
