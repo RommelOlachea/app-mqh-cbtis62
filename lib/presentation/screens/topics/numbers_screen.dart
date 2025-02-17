@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mqh_rommel/constants/app_constants.dart';
 
 class NumberScreen extends StatefulWidget {
   @override
@@ -6,29 +7,7 @@ class NumberScreen extends StatefulWidget {
 }
 
 class _NumberScreenState extends State<NumberScreen> {
-  final Map<String, String> mediaList = {
-    'assets/topics/numbers/1.jpg': 'UNO Se estira el índice con la palma al frente.',
-    'assets/topics/numbers/2.jpg': 'DOS Se estiran los dedos índice y medio.',
-    'assets/topics/numbers/3.jpg': 'TRES Se estiran los dedos índice, medio y anular con la palma al frente.',
-    'assets/topics/numbers/4.jpg': 'CUATRO Se estiran los dedos índice, medio, anular y meñique.',
-    'assets/topics/numbers/5.jpg': 'CINCO Se abre la mano con la palma al frente y los dedos separados.',
-    'assets/topics/numbers/6.jpg': 'SEIS Se hace la letra a con el pulgar hacia arriba.',
-    'assets/topics/numbers/7.jpg': 'SIETE Se hace una letra g, colocada en forma inclinada.',
-    'assets/topics/numbers/8.jpg': 'OCHO Se estiran los dedos pulgar, índice y medio, separados con la palma hacia usted.',
-    'assets/topics/numbers/9.gif': 'NUEVE Se hace la letra b con la palma hacia usted. Luego se cierran los dedos rodeando el pulgar.',
-    'assets/topics/numbers/10.gif': 'DIEZ Se hace el número 5 con la palma hacia arriba, y se rota la mano rápidamente hacia abajo.',
-    'assets/topics/numbers/11.gif': 'ONCE Se hace la letra a con la palma hacia usted y el dedo pulgar señalando hacia arriba, y se rota la mano arriba y a un lado.',
-    'assets/topics/numbers/12.gif': 'DOCE Se hace el número 7, y se mueve la mano arriba y a un lado.',
-    'assets/topics/numbers/13.gif': 'TRECE Se hace el número 8, y se rota la mano arriba y a un lado.',
-    'assets/topics/numbers/14.gif': 'CATORCE Se estiran los dedos índice, medio, anular y meñique, y se mueve la mano arriba y a un lado.',
-    'assets/topics/numbers/15.gif': 'QUINCE Se hace el número 5 y se rota la mano arriba y a un lado.',
-    'assets/topics/numbers/16.gif': 'DIECISEIS Se hace el número 6 con la palma hacia abajo, y se mueve hacia adelante.',
-    'assets/topics/numbers/17.gif': 'DIECISIETE Se hace el número 7 con la palma hacia abajo, y se mueve hacia adelante.',
-    'assets/topics/numbers/18.gif': 'DIECIOCHO Se hace el número 8 con la punta de los dedos señalando al frente, y se mueve hacia adelante',
-    'assets/topics/numbers/19.gif': 'DIECINUEVE Se hace el número 4 con la punta de los dedos señalando al frente, y se mueve hacia adelante.',
-    'assets/topics/numbers/20.gif': 'VEINTE Con el puño cerrado y los dedos pulgar e Indice estirados, forma una "C" y los pellizcas repetidamente',
-    'assets/topics/numbers/100.gif': 'Cien Se estira el índice, y se mueve a un lado hasta transformarse en c.',
-  };
+  final Map<String, String> mediaList = AppConstants().numbers;
 
   int currentIndex = 0;
 
