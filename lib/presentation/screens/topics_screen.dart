@@ -116,8 +116,8 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
                         route: '/numbers',
                       ),
                       _AdTopic(
-                        title: 'Días de la semana',
-                        description: 'Días de la semana en LSM.',
+                        title: 'Calendario',
+                        description: 'Días, meses y estaciones en LSM.',
                         icon: Icons.calendar_today,
                         gradientColors: [Color(0xFFBA68C8), Color(0xFF8E24AA)],
                         route: '/development',
@@ -201,47 +201,49 @@ class _AdTopic extends StatelessWidget {
       onTap: () {
         GoRouter.of(context).push(route);
       },
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: gradientColors,
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      child: Expanded(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(16.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          borderRadius: BorderRadius.circular(16.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: Colors.white, size: 36.0),
-            const SizedBox(height: 12.0),
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(icon, color: Colors.white, size: 36.0),
+              const SizedBox(height: 12.0),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              description,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 12.0,
+              const SizedBox(height: 8.0),
+              Text(
+                description,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 12.0,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
