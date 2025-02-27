@@ -123,8 +123,8 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
                         route: '/development',
                       ),
                       _AdTopic(
-                        title: 'Meses del año',
-                        description: 'Meses del año en LSM.',
+                        title: 'Preposiciones',
+                        description: 'Manejo del tiempo en LSM.',
                         icon: Icons.calendar_view_month,
                         gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)],
                         route: '/development',
@@ -137,7 +137,7 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
                 // Special Offer Section
                 const Text(
-                  'Frases por categoría',
+                  'Amplía tu conocimiento',
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
@@ -153,12 +153,12 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
                     scrollDirection: Axis.horizontal,
                     children: const [
                       _AddCategory(
-                        title: "Frases dentro del salón!",
+                        title: "Indicaciones dentro del salón",
                         backgroundColor: Colors.green,
                         route: '/development',
                       ),
                       _AddCategory(
-                        title: "Instrucciones y preguntas escolares",
+                        title: "Preguntas frecuentes",
                         backgroundColor: Colors.orangeAccent,
                         route: '/development',
                       ),
