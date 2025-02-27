@@ -46,12 +46,12 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>your usage description here</string>
+	<string>MQH requiere usar la camara</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>your usage description here</string>	
+	<string>MQH requiere usar el microfono</string>	
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Esta aplicación necesita acceso a la galería para guardar imágenes.</string>
+    <string>MQH necesita acceso a la galería para guardar imágenes.</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Esta aplicación necesita acceso a la galería para guardar imágenes capturadas.</string>
+    <string>MQH necesita acceso a la galería para guardar imágenes capturadas.</string>
 </dict>
 </plist>
