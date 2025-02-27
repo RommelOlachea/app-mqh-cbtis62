@@ -152,17 +152,21 @@ class _NumberScreenState extends State<NumberScreen> {
                 ],
               ),
               const SizedBox(height: 20,),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(10),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Text(
+                      description ?? 'Sin descripción',
+                      style: TextStyle(fontSize: 19, color: Colors.white),
+                    ),
+                  ),
                 ),
-                child: Text(
-                  description ?? 'Sin descripción',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
-              )
+              ),
             ],
           ),
         ),
