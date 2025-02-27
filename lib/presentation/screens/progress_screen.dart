@@ -266,8 +266,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                         ],
                       ),
                       child: TextButton.icon(
-                        onPressed: () {
-                          // Acción al presionar el botón de "Editar foto de perfil"c
+                        onPressed: () {                          
+                          context.push('/profilephoto');
                         },
                         icon: const Icon(
                           Icons.camera_alt,

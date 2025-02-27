@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/presentation/authenticate/authenticate.dart';
+import 'package:mqh_rommel/presentation/screens/profile_photo_screen.dart';
 import '../../presentation/screens/screens.dart';
 import '../../presentation/screens/topics/topics.dart';
 
@@ -60,6 +61,11 @@ final appRouter = GoRouter(
       name: 'developement',      
       path: '/development',
       builder: (context, state) =>  const DevelopmentScreen(),
+    ),    
+    GoRoute(
+      name: 'profilephoto',      
+      path: '/profilephoto',
+      builder: (context, state) =>  ProfilePhotoScreen(),
     ),    
   ],
 );
