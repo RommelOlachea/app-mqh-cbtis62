@@ -7,20 +7,22 @@ import '../database/database_helper.dart';
 import '../models/models.dart';
 
 class AuthRepository {
-  Future<int> registerUser(UserModel user) async {
+  Future<String> registerUser(UserModel user) async {
     final db = await DatabaseHelper().database;
 
     // Verificar si el usuario ya existe
     final existingUser = await getUserByEmail(user.email);
     if (existingUser != null) {
-      throw Exception('El usuario con el email ${user.email} ya existe.');
+      //throw Exception('El usuario con el email ${user.email} ya existe.');
+      return 'El usuario con el email ${user.email} ya existe.';
     }
 
     // Encriptar la contraseña antes de guardarla
-    final hashedPassword = sha256.convert(utf8.encode(user.password)).toString();
+    final hashedPassword =
+        sha256.convert(utf8.encode(user.password)).toString();
 
     // Insertar el nuevo usuario
-    return await db.insert(
+    int resultado = await db.insert(
       'usuarios',
       {
         'id': user.id,
@@ -31,6 +33,7 @@ class AuthRepository {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    return resultado > 0 ? 'Registro exitoso' : 'Error al registrar';
   }
 
   Future<UserModel?> getUserByEmail(String email) async {
