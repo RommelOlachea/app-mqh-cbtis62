@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class RegisterScreen extends StatefulWidget {
+import '../../controllers/auth_controller.dart';
+
+
+
+class RegisterScreen extends ConsumerStatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-
   bool passwordVisible = false;
   bool confirmPasswordVisible = false;
 
-  // Genera un token JWT de prueba
-  //todo: generar un token JWT real, y aplicar el modelo de autenticación
-  String _generateDummyJwt() {
-    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dGVzdF91c3Vhcmlv.bXV5U2VjcmV0S2V5'; 
-  }
-
-  Future<void> _saveDataLocally() async {
+  Future<void> _registerUser() async {
     if (_formKey.currentState!.validate()) {
-      final dummyJwtToken = _generateDummyJwt();
-
-      await _secureStorage.write(key: 'jwt_token', value: dummyJwtToken);
-      await _secureStorage.write(key: 'username', value: nameController.text);
-      await _secureStorage.write(key: 'email', value: emailController.text);
-      await _secureStorage.write(key: 'password', value: passwordController.text);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Datos guardados exitosamente')),
+      final authController = ref.read(authControllerProvider.notifier);
+      
+      String response = await authController.register(
+        nameController.text,
+        emailController.text,
+        passwordController.text,
       );
 
-      context.go('/login');  // Redirigir después del registro
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(response)),
+      );
+
+      if (response == "Registro exitoso") {
+        context.go('/login'); // Redirigir a la pantalla de inicio de sesión
+      }
     }
   }
 
@@ -55,46 +54,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: 280,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        ),
-                        child: Image.asset(
-                          'assets/icon/logo_icon.jpeg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -121,18 +80,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: nameController,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.person),
-                          labelText: 'ID Usuario',
-                          hintText: 'Nombre de Usuario',
+                          labelText: 'Nombre de Usuario',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese su nombre';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value!.isEmpty ? 'Ingrese su nombre' : null,
                       ),
                       const SizedBox(height: 15),
                       TextFormField(
@@ -140,19 +93,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.email),
                           labelText: 'Email',
-                          hintText: 'Introduzca su email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese su email';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                            return 'Introduzca un email válido';
-                          }
-                          return null;
-                        },
+                        validator: (value) =>
+                            value!.isEmpty || !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)
+                                ? 'Ingrese un email válido'
+                                : null,
                       ),
                       const SizedBox(height: 15),
                       TextFormField(
@@ -161,14 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.lock),
                           labelText: 'Contraseña',
-                          hintText: 'Introduzca su contraseña',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           suffixIcon: IconButton(
-                            icon: Icon(
-                              passwordVisible ? Icons.visibility : Icons.visibility_off,
-                            ),
+                            icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
                             onPressed: () {
                               setState(() {
                                 passwordVisible = !passwordVisible;
@@ -176,14 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese su contraseña';
-                          } else if (value.length < 6) {
-                            return 'La contraseña debe tener al menos 6 caracteres';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value!.length < 6 ? 'Mínimo 6 caracteres' : null,
                       ),
                       const SizedBox(height: 15),
                       TextFormField(
@@ -192,14 +130,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.lock),
                           labelText: 'Confirmar Contraseña',
-                          hintText: 'Confirme su contraseña',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           suffixIcon: IconButton(
-                            icon: Icon(
-                              confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                            ),
+                            icon: Icon(confirmPasswordVisible ? Icons.visibility : Icons.visibility_off),
                             onPressed: () {
                               setState(() {
                                 confirmPasswordVisible = !confirmPasswordVisible;
@@ -207,21 +142,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor confirme su contraseña';
-                          } else if (value != passwordController.text) {
-                            return 'Las contraseñas no coinciden';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value != passwordController.text
+                            ? 'Las contraseñas no coinciden'
+                            : null,
                       ),
                       const SizedBox(height: 15),
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: _saveDataLocally,
+                          onPressed: _registerUser,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF0D47A1),
                             shape: RoundedRectangleBorder(
