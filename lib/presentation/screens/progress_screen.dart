@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mqh_rommel/utils/utils.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -10,8 +11,8 @@ class ProgressScreen extends StatefulWidget {
 }
 
 class _ProgressScreenState extends State<ProgressScreen> {
- final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-  String _username = ''; 
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  String _username = '';
 
   @override
   void initState() {
@@ -26,29 +27,29 @@ class _ProgressScreenState extends State<ProgressScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     // Simulación de experiencia y la experiencia total para el siguiente nivel
-    double currentExp = 50;  // Experiencia actual (puedes cambiar este valor dinámicamente)
-    double totalExpForNextLevel = 100; // Total de experiencia para el siguiente nivel
+    double currentExp =
+        50; // Experiencia actual (puedes cambiar este valor dinámicamente)
+    double totalExpForNextLevel =
+        100; // Total de experiencia para el siguiente nivel
 
     // Cálculo del porcentaje de progreso
     double progress = currentExp / totalExpForNextLevel;
 
     // Foto de perfil
-    String profilePicturePath = 'assets/profile/icono_perfil4.png'; 
+    String profilePicturePath = 'assets/profile/icono_perfil4.png';
 
     // para gestionar el estado de la sesion
     final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-
 
     return Scaffold(
       body: Container(
         // Fondo con gradiente
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue[900]!, Colors.blueAccent], 
+            colors: [Colors.blue[900]!, Colors.blueAccent],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -69,18 +70,21 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
                     ),
-                    child: Center(  // Aseguramos que esté centrado
+                    child: Center(
+                      // Aseguramos que esté centrado
                       child: SizedBox(
-                        width: 200,  // Define el tamaño deseado de la imagen
+                        width: 200, // Define el tamaño deseado de la imagen
                         height: 200, // Mantén el tamaño fijo
                         child: Image.asset(
                           profilePicturePath,
-                          fit: BoxFit.cover, // La imagen debe cubrir todo el espacio
+                          fit: BoxFit
+                              .cover, // La imagen debe cubrir todo el espacio
                           alignment: Alignment.center, // Centrado
                           // En caso de que la imagen no se cargue, mostrar el ícono de usuario
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(
-                              Icons.account_circle, // Ícono de usuario si no se carga la imagen
+                              Icons
+                                  .account_circle, // Ícono de usuario si no se carga la imagen
                               size: 200,
                               color: Colors.grey,
                             );
@@ -121,7 +125,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
             ),
             // Barra de progreso de experiencia
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -142,7 +147,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                         height: 12,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300], // Color de fondo (lo que falta)
+                          color:
+                              Colors.grey[300], // Color de fondo (lo que falta)
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: const [
                             BoxShadow(
@@ -156,10 +162,14 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       // Barra de progreso (color basado en la experiencia actual)
                       Container(
                         height: 12,
-                        width: MediaQuery.of(context).size.width * progress, // Ancho basado en el porcentaje de progreso
+                        width: MediaQuery.of(context).size.width *
+                            progress, // Ancho basado en el porcentaje de progreso
                         decoration: BoxDecoration(
-                          gradient:const  LinearGradient(
-                            colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFFBA68C8),
+                              Color(0xFF8E24AA)
+                            ], // Gradiente morado
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -174,7 +184,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
-                            border: Border.all(color: Color(0xFF8E24AA), width: 3), // Borde morado
+                            border: Border.all(
+                                color: Color(0xFF8E24AA),
+                                width: 3), // Borde morado
                           ),
                         ),
                       ),
@@ -186,7 +198,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     children: [
                       Text(
                         "Exp: $currentExp/$totalExpForNextLevel",
-                        style: const TextStyle(fontSize: 16, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white),
                       ),
                       const Text(
                         "Siguiente nivel",
@@ -214,12 +227,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     Container(
                       width: 250,
                       decoration: BoxDecoration(
-                        gradient:const LinearGradient(
-                          colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFFBA68C8),
+                            Color(0xFF8E24AA)
+                          ], // Gradiente morado
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
-                        borderRadius: BorderRadius.circular(30), // Bordes redondeados
+                        borderRadius:
+                            BorderRadius.circular(30), // Bordes redondeados
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
@@ -252,11 +269,15 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       width: 250,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
+                          colors: [
+                            Color(0xFFBA68C8),
+                            Color(0xFF8E24AA)
+                          ], // Gradiente morado
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
-                        borderRadius: BorderRadius.circular(30), // Bordes redondeados
+                        borderRadius:
+                            BorderRadius.circular(30), // Bordes redondeados
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
@@ -266,7 +287,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                         ],
                       ),
                       child: TextButton.icon(
-                        onPressed: () {                          
+                        onPressed: () {
                           context.push('/profilephoto');
                         },
                         icon: const Icon(
@@ -287,12 +308,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     Container(
                       width: 250,
                       decoration: BoxDecoration(
-                        gradient:const LinearGradient(
-                          colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)], // Gradiente morado
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFFBA68C8),
+                            Color(0xFF8E24AA)
+                          ], // Gradiente morado
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
-                        borderRadius: BorderRadius.circular(30), // Bordes redondeados
+                        borderRadius:
+                            BorderRadius.circular(30), // Bordes redondeados
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
@@ -303,7 +328,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       ),
                       child: TextButton.icon(
                         onPressed: () async {
-                          await _secureStorage.write(key: 'rememberme', value: false.toString());
+                          SecureStorage.setRememberMe(false);
+                          SecureStorage.deleteToken();
                           context.go('/login');
                         },
                         icon: const Icon(

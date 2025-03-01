@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mqh_rommel/data/models/user_model.dart';
+import 'package:mqh_rommel/utils/utils.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../../controllers/auth_controller.dart';
+
+class LoginScreen extends ConsumerStatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -17,17 +22,21 @@ class _LoginScreenState extends State<LoginScreen> {
   bool passwordVisible = false;
 
   Future<void> _validateAndSubmit() async {
-    if (_formKey.currentState!.validate()) {
-      // Obtener datos almacenados
-      String? storedEmail = await _secureStorage.read(key: 'email');
-      String? storedPassword = await _secureStorage.read(key: 'password');
+    final authController = ref.read(authControllerProvider.notifier);
 
-      if (storedEmail == emailController.text &&
-          storedPassword == passwordController.text) {
+    if (_formKey.currentState!.validate()) {
+      final user = await authController.login(
+          emailController.text, passwordController.text);
+
+      if (user != null) {
         // Guardar la preferencia de "Recuérdame"
         await _secureStorage.write(
             key: 'rememberme', value: rememberMe.toString());
-
+        if (rememberMe) {
+          SecureStorage.saveToken(user.token);
+        } else {
+          SecureStorage.deleteToken();
+        }
         context.go('/home'); // Redirigir al home
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

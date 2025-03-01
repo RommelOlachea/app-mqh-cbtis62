@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mqh_rommel/constants/enviroment.dart';
+import 'package:mqh_rommel/data/models/models.dart';
+import 'package:mqh_rommel/data/repositories/auth_repository.dart'
+    show AuthRepository;
+import 'package:mqh_rommel/providers/auth_providers.dart';
+import 'package:mqh_rommel/utils/secure_storage.dart' show SecureStorage;
 import 'package:uuid/uuid.dart';
-import '../data/models/user_model.dart';
-import '../data/repositories/auth_repository.dart';
-import '../providers/auth_providers.dart';
-import '../utils/utils.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, UserModel?>((ref) {
@@ -39,26 +42,33 @@ class AuthController extends StateNotifier<UserModel?> {
   Future<void> _loadUserFromStorage() async {
     final token = await SecureStorage.getToken();
     if (token != null) {
-      // Simulación de usuario con token recuperado
-      state = UserModel(
-          id: "1",
-          email: "test@example.com",
-          name: "Test User",
-          password: "algunpassword",
-          token: token);
+      final jwt = JWT.verify(token, SecretKey(Enviroment.lincesKey));
+      final user = UserModel(
+        id: jwt.payload['sub'],
+        name: jwt.payload['name'],
+        email: jwt.payload['email'],
+        password: '',
+        token: token,
+      );
+      state = user;
     }
   }
 
-  // Future<bool> login(String email, String password) async {
-  //   final user = await _repository.login(email, password);
-  //   if (user != null) {
-  //     state = user;
-  //     await SecureStorage.saveToken(user.token);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  Future<void> loginUserFromStorage() async {
+    final token = await SecureStorage.getToken();
+    if (token != null) {
+      final jwt = JWT.verify(token, SecretKey(Enviroment.lincesKey));
+      final user = UserModel(
+        id: jwt.payload['sub'],
+        name: jwt.payload['name'],
+        email: jwt.payload['email'],
+        password: '',
+        token: token,
+      );
+      state = user;
+    }
+  }
+
 
   Future<UserModel?> login(String email, String password) async {
     UserModel? user = await _authRepository.getUserByEmail(email);
@@ -67,6 +77,25 @@ class AuthController extends StateNotifier<UserModel?> {
       // Verificar si la contraseña coincide (hash)
       final hashedPassword = sha256.convert(utf8.encode(password)).toString();
       if (hashedPassword == user.password) {
+        final jwt = JWT({
+          'sub': user.id, // Sujeto - identificador del sujeto del token
+          'iat': DateTime.now().millisecondsSinceEpoch ~/
+              1000, // Tiempo de emisión
+          'exp': (DateTime.now()
+                  .add(const Duration(hours: 1))
+                  .millisecondsSinceEpoch ~/
+              1000), // Expiración
+          'iss': 'cbtis62.com', // Emisor - Identificador del emisor del token
+          'aud':
+              'mqh.rommel.olachea.alumnonocbtis62', // Audiencia - Identificador de la audiencia del token
+          'name': user.name,
+          'email': user.email
+        });
+
+        final token = jwt.sign(SecretKey(Enviroment.lincesKey));
+        user.token = token;
+
+        state = user;
         return user;
       }
     }
@@ -76,5 +105,6 @@ class AuthController extends StateNotifier<UserModel?> {
   Future<void> logout() async {
     state = null;
     await SecureStorage.deleteToken();
+    await SecureStorage.setRememberMe(false);
   }
 }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mqh_rommel/controllers/auth_controller.dart';
+
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   late VideoPlayerController _controller;
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
@@ -41,10 +44,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
         // Determinar la pantalla a la que se debe navegar
         if (rememberMe != null && rememberMe.toLowerCase() == 'true') {
+          final authController = ref.read(authControllerProvider.notifier);
+          await authController.loginUserFromStorage();          
+          
           context.go('/home'); // Redirigir al home
         } else {
           context.go('/login'); // Redirigir al login
-        }        
+        }
       });
     });
 

@@ -14,4 +14,8 @@ class SecureStorage {
   static Future<void> deleteToken() async {
     await _storage.delete(key: 'jwt_token');
   }
+
+  static Future<void> setRememberMe(bool rememberMe) async {
+    await _storage.write(key: 'rememberme', value: rememberMe.toString());
+  }
 }
