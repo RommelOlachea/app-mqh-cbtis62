@@ -231,6 +231,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       child: TextButton.icon(
                         onPressed: () {
                           // Acción al presionar el botón de "Editar usuario"
+                          context.go('/preferences');
                         },
                         icon: const Icon(
                           Icons.edit,
