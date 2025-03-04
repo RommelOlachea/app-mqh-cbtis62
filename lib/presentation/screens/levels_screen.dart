@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
@@ -46,7 +45,7 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
         actions:  [
           Padding(
             padding:const  EdgeInsets.only(right: 16.0),
-            child: UserAvatarImage(imageProfile: imageProfile, radius : 25),
+            child: UserAvatarImage(imageProfile: imageProfile, radius : 25, color: Colors.white, width: 1,),
           ),
         ],
       ),

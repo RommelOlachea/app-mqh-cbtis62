@@ -61,7 +61,7 @@ class _AlphabetScreenState extends ConsumerState<AlphabetScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: UserAvatarImage(imageProfile: imageProfile, radius: 30),
+            child: UserAvatarImage(imageProfile: imageProfile, radius: 30, color: Colors.white, width: 1,),
           ),
         ],
         backgroundColor: Colors.transparent,

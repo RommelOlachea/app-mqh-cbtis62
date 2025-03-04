@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
 import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
 import 'package:mqh_rommel/utils/utils_app.dart';
-import 'package:path_provider/path_provider.dart';
 
 class TopicsScreen extends ConsumerStatefulWidget {
   @override
@@ -87,7 +83,7 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                       ],
                     ),
                     // User Avatar
-                    UserAvatarImage(imageProfile: imageProfile, radius : 35),
+                    UserAvatarImage(imageProfile: imageProfile, radius : 35, color: Colors.white,width: 1,),
                   ],
                 ),
                 const SizedBox(height: 24.0),

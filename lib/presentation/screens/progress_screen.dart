@@ -1,10 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
 import 'package:mqh_rommel/utils/utils_app.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ProgressScreen extends ConsumerStatefulWidget {
   const ProgressScreen({super.key});
@@ -18,15 +17,6 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
   @override
   void initState() {
     super.initState();
-  }
-
-  Future<String> _verificarImagen(String imageName) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final String path = '${directory.path}/$imageName.jpg';
-    // Limpiar la caché de la imagen para forzar la actualización
-    await FileImage(File(path)).evict();
-    final File file = File(path);
-    return await file.exists() ? path : "";
   }
 
   @override
@@ -77,36 +67,9 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                       // Aseguramos que esté centrado
                       child: Column(
                         children: [
-                          SizedBox(height: 85,),
-                          FutureBuilder<String>(
-                          future: _verificarImagen(imageProfile),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child:
-                                    CircularProgressIndicator(), // Opcional: Indicador de carga
-                              );
-                            }
-                        
-                            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                              return CircleAvatar(
-                                radius: 100,
-                                backgroundColor: Colors.white,
-                                backgroundImage:
-                                    FileImage(File(snapshot.data!)),
-                              );
-                            }
-                        
-                            return const CircleAvatar(
-                              radius: 100,
-                              backgroundColor: Colors.white,
-                              backgroundImage: AssetImage(
-                                  'assets/profile/icono_perfil4.png'),
-                            );
-                          },
-                        ),]
+                          SizedBox(height: 70,),
+                          UserAvatarImage(imageProfile: imageProfile, radius : 90, color: Colors.purple, width: 5,),
+                          ]
                       ),
                     ),
                   ),
