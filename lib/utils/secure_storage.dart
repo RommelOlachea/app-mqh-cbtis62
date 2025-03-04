@@ -18,4 +18,8 @@ class SecureStorage {
   static Future<void> setRememberMe(bool rememberMe) async {
     await _storage.write(key: 'rememberme', value: rememberMe.toString());
   }
+
+  static Future<String?> getRememberMe() async {
+    return await _storage.read(key: 'rememberme');
+  }
 }

@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/utils/utils_app.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ProfilePhotoScreen extends StatefulWidget {
+class ProfilePhotoScreen extends ConsumerStatefulWidget {
   @override
   _ProfilePhotoScreenState createState() => _ProfilePhotoScreenState();
 }
 
-class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
+class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
   File? _imagenTemporal; // Imagen capturada pero aún no guardada
   File? _imagenGuardada; // Imagen guardada en almacenamiento local
 
@@ -18,12 +21,12 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
     _cargarImagenGuardada();
   }
 
-  // 📷 Método para tomar una foto con la cámara
+  //Método para tomar una foto con la cámara
   Future<void> _tomarFoto() async {
     final ImagePicker picker = ImagePicker();
     final XFile? imagen = await picker.pickImage(
       source: ImageSource.camera,
-      imageQuality: 70, // 📌 Reduce el peso del archivo sin perder mucha calidad
+      imageQuality: 70, //Reduce el peso del archivo sin perder mucha calidad
     );
 
     if (imagen != null) {
@@ -33,30 +36,44 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
     }
   }
 
-  // 💾 Método para guardar la imagen localmente
+  //Método para guardar la imagen localmente
   Future<void> _guardarImagen() async {
     if (_imagenTemporal == null) return;
 
     final directory = await getApplicationDocumentsDirectory();
-    final String path = '${directory.path}/perfil.jpg';
+    final String email = ref.read(authControllerProvider)!.email;
+    final String imageName = UtilsApp.cleanEmailUsername(email);
+
+    final String path = '${directory.path}/$imageName.jpg';
 
     // Copiar la imagen al almacenamiento local
     await _imagenTemporal!.copy(path);
 
+    // Limpiar la caché de la imagen para forzar la actualización
+    await FileImage(File(path)).evict();
+
     setState(() {
       _imagenGuardada = File(path);
+      //_imagenGuardada = _imagenTemporal;
       _imagenTemporal = null; // Limpiamos la imagen temporal después de guardar
     });
 
+    final authController = ref.read(authControllerProvider.notifier);
+    authController.forceUpdate();
+
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Imagen guardada correctamente')),
+      const SnackBar(content: Text('Imagen guardada correctamente')),
     );
   }
 
-  // 🔄 Método para cargar la imagen guardada al iniciar la app
+  //Método para cargar la imagen guardada al iniciar la app
   Future<void> _cargarImagenGuardada() async {
     final directory = await getApplicationDocumentsDirectory();
-    final String path = '${directory.path}/perfil.jpg';
+    String imageProfile =
+        UtilsApp.cleanEmailUsername(ref.read(authControllerProvider)!.email);
+    final String path = '${directory.path}/$imageProfile.jpg';
+    // Limpiar la caché de la imagen para forzar la actualización
+    await FileImage(File(path)).evict();
     File imagenFile = File(path);
 
     if (await imagenFile.exists()) {
@@ -69,37 +86,33 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Capturar Foto de Perfil")),
+      appBar: AppBar(title: const Text("Editar Foto de Perfil")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 🖼 Mostrar imagen (guardada o nueva)
             CircleAvatar(
               radius: 130,
               backgroundImage: _imagenTemporal != null
                   ? FileImage(_imagenTemporal!)
-                  : (_imagenGuardada != null ? FileImage(_imagenGuardada!) : null),
+                  : (_imagenGuardada != null
+                      ? FileImage(_imagenGuardada!)
+                      : null),
               child: (_imagenTemporal == null && _imagenGuardada == null)
-                  ? Icon(Icons.person, size: 60)
+                  ? const Icon(Icons.person, size: 60)
                   : null,
             ),
-            SizedBox(height: 20),
-
-            // 📸 Botón para tomar una foto
+            const SizedBox(height: 20),
             ElevatedButton.icon(
-              icon: Icon(Icons.camera_alt),
-              label: Text("Tomar Foto"),
+              icon: const Icon(Icons.camera_alt),
+              label: const Text("Tomar Foto"),
               onPressed: _tomarFoto,
             ),
-
-            SizedBox(height: 10),
-
-            // 💾 Botón para guardar la imagen (solo si hay una imagen temporal)
+            const SizedBox(height: 10),
             if (_imagenTemporal != null)
               ElevatedButton.icon(
-                icon: Icon(Icons.save),
-                label: Text("Utilizar Foto"),
+                icon: const Icon(Icons.save),
+                label: const Text("Utilizar Foto"),
                 onPressed: _guardarImagen,
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               ),

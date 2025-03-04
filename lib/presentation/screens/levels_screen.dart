@@ -1,13 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class LevelsScreen extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
+import 'package:mqh_rommel/utils/utils_app.dart';
+import 'package:path_provider/path_provider.dart';
+
+class LevelsScreen extends ConsumerStatefulWidget {
   @override
   _LevelsScreenState createState() => _LevelsScreenState();
 }
 
-class _LevelsScreenState extends State<LevelsScreen> {
+class _LevelsScreenState extends ConsumerState<LevelsScreen> {
+
+
+  Future<String> _verificarImagen(String imageName) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final String path = '${directory.path}/$imageName.jpg';
+    final File file = File(path);
+    return await file.exists() ? path : "";
+  }
+
+
   @override
   Widget build(BuildContext context) {
+     String imageProfile =
+         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
+
+
     return Scaffold(
       extendBodyBehindAppBar: true, // Extiende el cuerpo detrás del AppBar
       appBar: AppBar(
@@ -22,14 +43,10 @@ class _LevelsScreenState extends State<LevelsScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: const [
+        actions:  [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: 22,
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage('assets/profile/icono_perfil4.png'), // Asegúrate de tener esta imagen en assets
-            ),
+            padding:const  EdgeInsets.only(right: 16.0),
+            child: UserAvatarImage(imageProfile: imageProfile, radius : 25),
           ),
         ],
       ),
@@ -118,7 +135,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
         color: color,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,7 +146,7 @@ class _LevelsScreenState extends State<LevelsScreen> {
           const SizedBox(height: 10),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,

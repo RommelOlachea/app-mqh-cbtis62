@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/utils/secure_storage.dart';
 
 import 'package:video_player/video_player.dart';
 import 'dart:async';
@@ -14,7 +15,6 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   late VideoPlayerController _controller;
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -37,19 +37,23 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authController = ref.read(authControllerProvider.notifier);
     // Asegurar que el Future se ejecute después de build
     Future.microtask(() {
-      Timer(const Duration(milliseconds: 4000), () async {
-        String? rememberMe = await _secureStorage.read(key: 'rememberme');
-
+      Timer(const Duration(milliseconds: 4100), () async {
+        String? rememberMe = await SecureStorage.getRememberMe();        
         // Determinar la pantalla a la que se debe navegar
         if (rememberMe != null && rememberMe.toLowerCase() == 'true') {
-          final authController = ref.read(authControllerProvider.notifier);
-          await authController.loginUserFromStorage();          
-          
-          context.go('/home'); // Redirigir al home
+          String res = await authController.loginUserFromStorage();
+          if (res == 'correcto') {
+            if (mounted) context.go('/home'); // Redirigir al home
+          } else {
+            authController.logout();
+            if (mounted) context.go('/login'); // Redirigir al login
+          }
         } else {
-          context.go('/login'); // Redirigir al login
+          authController.logout();
+          if (mounted) context.go('/login'); // Redirigir al login
         }
       });
     });

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqh_rommel/constants/app_constants.dart';
+import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
+import 'package:mqh_rommel/utils/utils_app.dart';
 
-class NumberScreen extends StatefulWidget {
+class NumberScreen extends ConsumerStatefulWidget {
   @override
   _NumberScreenState createState() => _NumberScreenState();
 }
 
-class _NumberScreenState extends State<NumberScreen> {
+class _NumberScreenState extends ConsumerState<NumberScreen> {
   final Map<String, String> mediaList = AppConstants().numbers;
 
   int currentIndex = 0;
@@ -33,6 +37,9 @@ class _NumberScreenState extends State<NumberScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String imageProfile =
+        UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
+
     final currentMedia = mediaList.keys.elementAt(currentIndex);
     final currentLetter = _getLetterFromMedia(currentMedia);
 
@@ -49,13 +56,10 @@ class _NumberScreenState extends State<NumberScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage('assets/profile/icono_perfil4.png'),
-            ),
+            padding: const EdgeInsets.only(right: 16.0),
+            child: UserAvatarImage(imageProfile: imageProfile, radius: 30),
           ),
         ],
         backgroundColor: Colors.transparent,

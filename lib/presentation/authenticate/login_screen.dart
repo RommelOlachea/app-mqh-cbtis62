@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mqh_rommel/data/models/user_model.dart';
 import 'package:mqh_rommel/utils/utils.dart';
-
 import '../../controllers/auth_controller.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -30,8 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (user != null) {
         // Guardar la preferencia de "Recuérdame"
-        await _secureStorage.write(
-            key: 'rememberme', value: rememberMe.toString());
+        SecureStorage.setRememberMe(rememberMe);
         if (rememberMe) {
           SecureStorage.saveToken(user.token);
         } else {

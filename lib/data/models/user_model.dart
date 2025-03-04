@@ -1,9 +1,11 @@
 class UserModel {
   final String id;
-  final String email;
+  String email;
   final String name;
   final String password;
   String token;
+
+
 
   UserModel({
     required this.id,
@@ -19,7 +21,8 @@ class UserModel {
       'id': id,
       'email': email,
       'name': name,
-      'password': password, // Hash de contraseña (debe ser hasheado antes de guardar)
+      'password':
+          password, // Hash de contraseña (debe ser hasheado antes de guardar)
       'token': token,
     };
   }
@@ -34,4 +37,23 @@ class UserModel {
       token: map['token'],
     );
   }
+
+
+  // Método copyWith para actualizar parcialmente el modelo y forzar la actualización
+  UserModel copyWith({
+    String? id,
+    String? email,
+    String? name,
+    String? password,
+    String? token,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      password: password ?? this.password,
+      token: token ?? this.token,
+    );
+  }
+
 }

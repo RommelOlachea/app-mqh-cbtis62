@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
@@ -20,7 +21,7 @@ class AuthController extends StateNotifier<UserModel?> {
   final AuthRepository _authRepository;
 
   AuthController(this._authRepository) : super(null) {
-    _loadUserFromStorage();
+    //_loadUserFromStorage();
   }
 
   final Uuid _uuid = Uuid();
@@ -39,36 +40,26 @@ class AuthController extends StateNotifier<UserModel?> {
     return result;
   }
 
-  Future<void> _loadUserFromStorage() async {
-    final token = await SecureStorage.getToken();
-    if (token != null) {
-      final jwt = JWT.verify(token, SecretKey(Enviroment.lincesKey));
-      final user = UserModel(
-        id: jwt.payload['sub'],
-        name: jwt.payload['name'],
-        email: jwt.payload['email'],
-        password: '',
-        token: token,
-      );
-      state = user;
+  Future<String> loginUserFromStorage() async {
+    try {
+      final token = await SecureStorage.getToken();
+      if (token != null) {
+        final jwt = JWT.verify(token, SecretKey(Enviroment.lincesKey));
+        final user = UserModel(
+          id: jwt.payload['sub'],
+          name: jwt.payload['name'],
+          email: jwt.payload['email'],
+          password: '',
+          token: token,
+        );
+        state = user; //cargamos la imagen del perfil en caso de existir.
+        return 'correcto';
+      }
+      return 'incorrecto';
+    } catch (e) {
+      return 'incorrecto';
     }
   }
-
-  Future<void> loginUserFromStorage() async {
-    final token = await SecureStorage.getToken();
-    if (token != null) {
-      final jwt = JWT.verify(token, SecretKey(Enviroment.lincesKey));
-      final user = UserModel(
-        id: jwt.payload['sub'],
-        name: jwt.payload['name'],
-        email: jwt.payload['email'],
-        password: '',
-        token: token,
-      );
-      state = user;
-    }
-  }
-
 
   Future<UserModel?> login(String email, String password) async {
     UserModel? user = await _authRepository.getUserByEmail(email);
@@ -103,8 +94,13 @@ class AuthController extends StateNotifier<UserModel?> {
   }
 
   Future<void> logout() async {
-    state = null;
+    //state = null;
     await SecureStorage.deleteToken();
     await SecureStorage.setRememberMe(false);
+  }
+
+  Future<void> forceUpdate() async {
+    // Reasigna el mismo estado para que Riverpod lo detecte como un "cambio"
+    state = state?.copyWith() ?? state;
   }
 }

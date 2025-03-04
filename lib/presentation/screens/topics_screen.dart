@@ -1,33 +1,35 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
+import 'package:mqh_rommel/utils/utils_app.dart';
+import 'package:path_provider/path_provider.dart';
 
-class TopicsScreen extends StatefulWidget {
+class TopicsScreen extends ConsumerStatefulWidget {
   @override
-  State<TopicsScreen> createState() => _TopicsScreenState();
+  _TopicsScreenState createState() => _TopicsScreenState();
 }
 
-class _TopicsScreenState extends State<TopicsScreen> {
+class _TopicsScreenState extends ConsumerState<TopicsScreen> {
   
-final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-  String _username = ''; 
+  
 
   @override
   void initState() {
     super.initState();
-    _loadUsername();
+    // _loadUsername();
   }
-
-  Future<void> _loadUsername() async {
-    String? storedUsername = await _secureStorage.read(key: 'username');
-    setState(() {
-      _username = storedUsername ?? 'Usuario';
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
+     String imageProfile =
+         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
+    String username = ref.watch(authControllerProvider)!.name;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -51,8 +53,8 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
-                          text:  TextSpan(
-                            style:const TextStyle(
+                          text: TextSpan(
+                            style: const TextStyle(
                               fontSize: 28.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -63,7 +65,7 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
                                 text: 'Hola, ',
                               ),
                               TextSpan(
-                                text: _username,
+                                text: username,
                                 style: const TextStyle(
                                   color: Color(0xFFFFD54F), // Dorado claro
                                 ),
@@ -85,11 +87,7 @@ final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
                       ],
                     ),
                     // User Avatar
-                    const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage:
-                          AssetImage('assets/profile/icono_perfil4.png'),
-                    ),
+                    UserAvatarImage(imageProfile: imageProfile, radius : 35),
                   ],
                 ),
                 const SizedBox(height: 24.0),

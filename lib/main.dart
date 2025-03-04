@@ -1,22 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mqh_rommel/config/router/app_router.dart';
 
-
 void main() async{
-
-final envFile = File('.env');
-  if (envFile.existsSync()) {
-    print('El archivo .env existe y contiene:');
-    print(envFile.readAsStringSync());
-  } else {
-    print('⚠️ El archivo .env NO fue encontrado');
-  }
-
-
   await dotenv.load(fileName: '.env');
   runApp(const ProviderScope(child: MyApp()));
 }
