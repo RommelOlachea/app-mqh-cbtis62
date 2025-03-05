@@ -67,7 +67,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                       // Aseguramos que esté centrado
                       child: Column(
                         children: [
-                          SizedBox(height: 70,),
+                          const SizedBox(height: 70,),
                           UserAvatarImage(imageProfile: imageProfile, radius : 90, color: Colors.purple, width: 5,),
                           ]
                       ),
