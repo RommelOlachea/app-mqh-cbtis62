@@ -227,14 +227,14 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                       ),
                       child: TextButton.icon(
                         onPressed: () {
-                          // Acción al presionar el botón de "Editar usuario"
+                          context.push('/preferences');
                         },
                         icon: const Icon(
                           Icons.edit,
                           color: Colors.white,
                         ),
                         label: const Text(
-                          "Editar Usuario",
+                          "Preferencias",
                           style: TextStyle(
                             color: Colors.white, // Texto blanco
                             fontSize: 18, // Tamaño del texto

@@ -87,6 +87,11 @@ final appRouter = GoRouter(
       path: '/seasons',
       builder: (context, state) =>  SeasonsScreen(),
     ),    
+    GoRoute(
+      name: 'preferences',      
+      path: '/preferences',
+      builder: (context, state) =>  PreferencesScreen(),
+    ),    
   ],
 );
 
