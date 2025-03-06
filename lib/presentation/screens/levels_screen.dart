@@ -13,15 +13,6 @@ class LevelsScreen extends ConsumerStatefulWidget {
 
 class _LevelsScreenState extends ConsumerState<LevelsScreen> {
 
-
-  Future<String> _verificarImagen(String imageName) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final String path = '${directory.path}/$imageName.jpg';
-    final File file = File(path);
-    return await file.exists() ? path : "";
-  }
-
-
   @override
   Widget build(BuildContext context) {
      String imageProfile =

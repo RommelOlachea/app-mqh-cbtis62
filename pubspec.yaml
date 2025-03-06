@@ -68,9 +68,13 @@ flutter:
   assets:
     - assets/videos/
     - assets/icon/
+    - assets/icon/topics/
     - assets/profile/
     - assets/topics/alphabet/
     - assets/topics/numbers/
+    - assets/topics/calendar/week/
+    - assets/topics/calendar/months/
+    - assets/topics/calendar/seasons/
     - assets/image/
     - .env    
   #   - images/a_dot_ham.jpeg

@@ -56,5 +56,37 @@ class AppConstants {
     'assets/topics/numbers/100.gif': 'Cien Se estira el índice, y se mueve a un lado hasta transformarse en c.',
   };
 
+ final Map<String, String> dayofsweek = {
+    'assets/topics/calendar/week/lunes.gif': 'LUNES descripcion...',
+    'assets/topics/calendar/week/martes.gif': 'MARTES descripcion...',
+    'assets/topics/calendar/week/miercoles.gif': 'MIERCOLES descripcion...',
+    'assets/topics/calendar/week/jueves.gif': 'JUEVES descripcion...',
+    'assets/topics/calendar/week/viernes.gif': 'VIERNES descripcion...',
+    'assets/topics/calendar/week/sabado.gif': 'SABADO descripcion...',
+    'assets/topics/calendar/week/domingo.gif': 'DOMINGO descripcion...',
+  };
+
+ final Map<String, String> seasons = {
+    'assets/topics/calendar/seasons/primavera.gif': 'PRIMAVERA descripcion...',
+    'assets/topics/calendar/seasons/verano.gif': 'VERANO descripcion...',    
+    'assets/topics/calendar/seasons/otono.gif': 'ATOÑO descripcion...',
+    'assets/topics/calendar/seasons/invierno.gif': 'INVIERNO descripcion...',
+  };
+
+ final Map<String, String> months = {
+    'assets/topics/calendar/months/enero.gif': 'ENERO descripcion...',
+    'assets/topics/calendar/months/febrero.gif': 'FEBRERO descripcion...',
+    'assets/topics/calendar/months/marzo.gif': 'MARZO descripcion...',
+    'assets/topics/calendar/months/abril.gif': 'ABRIL descripcion...',
+    'assets/topics/calendar/months/mayo.gif': 'MAYO descripcion...',
+    'assets/topics/calendar/months/junio.gif': 'JUNIO descripcion...',
+    'assets/topics/calendar/months/julio.gif': 'JULIO descripcion...',
+    'assets/topics/calendar/months/agosto.gif': 'AGOSTO descripcion...',
+    'assets/topics/calendar/months/septiembre.gif': 'SEPTIEMBRE descripcion...',
+    'assets/topics/calendar/months/octubre.gif': 'OCTUBRE descripcion...',
+    // 'assets/topics/calendar/months/noviembre.gif': 'NOVIEMBRE descripcion...',
+    'assets/topics/calendar/months/diciembre.gif': 'DICIEMBRE descripcion...',
+  };
+
 
 }

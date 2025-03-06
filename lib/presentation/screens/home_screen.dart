@@ -57,7 +57,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
-              label: 'Progreso',
+              label: 'Perfil',
             ),
           ],
           currentIndex: _selectedIndex,

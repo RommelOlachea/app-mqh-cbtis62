@@ -67,6 +67,26 @@ final appRouter = GoRouter(
       path: '/profilephoto',
       builder: (context, state) =>  ProfilePhotoScreen(),
     ),    
+    GoRoute(
+      name: 'calendary',      
+      path: '/calendary',
+      builder: (context, state) =>  CalendaryScreen(),
+    ),    
+    GoRoute(
+      name: 'daysofweek',      
+      path: '/daysofweek',
+      builder: (context, state) =>  DaysOfWeekScreen(),
+    ),    
+    GoRoute(
+      name: 'months',      
+      path: '/months',
+      builder: (context, state) =>  MonthsScreen(),
+    ),    
+    GoRoute(
+      name: 'seasons',      
+      path: '/seasons',
+      builder: (context, state) =>  SeasonsScreen(),
+    ),    
   ],
 );
 

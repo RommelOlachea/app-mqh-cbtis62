@@ -11,9 +11,6 @@ class TopicsScreen extends ConsumerStatefulWidget {
 }
 
 class _TopicsScreenState extends ConsumerState<TopicsScreen> {
-  
-  
-
   @override
   void initState() {
     super.initState();
@@ -22,12 +19,14 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
 
   @override
   Widget build(BuildContext context) {
-     String imageProfile =
-         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
+    String imageProfile =
+        UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
     String username = ref.watch(authControllerProvider)!.name;
 
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.blue[900]!, Colors.blueAccent],
@@ -83,7 +82,12 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                       ],
                     ),
                     // User Avatar
-                    UserAvatarImage(imageProfile: imageProfile, radius : 35, color: Colors.white,width: 1,),
+                    UserAvatarImage(
+                      imageProfile: imageProfile,
+                      radius: 35,
+                      color: Colors.white,
+                      width: 1,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 24.0),
@@ -98,28 +102,28 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                       _AdTopic(
                         title: 'Abecedario',
                         description: 'Aprende el abecedario en LSM.',
-                        icon: Icons.abc,
+                        image: 'assets/icon/topics/abecedario2.png',
                         gradientColors: [Color(0xFFFFA726), Color(0xFFFF7043)],
                         route: '/alphabet',
                       ),
                       _AdTopic(
                         title: 'Números',
                         description: 'Números del 1 al 20 en LSM.',
-                        icon: Icons.numbers,
+                        image: 'assets/icon/topics/numeros.png',
                         gradientColors: [Color(0xFF66BB6A), Color(0xFF43A047)],
                         route: '/numbers',
                       ),
                       _AdTopic(
                         title: 'Calendario',
                         description: 'Días, meses y estaciones en LSM.',
-                        icon: Icons.calendar_today,
+                        image: 'assets/icon/topics/calendary2.png',
                         gradientColors: [Color(0xFFBA68C8), Color(0xFF8E24AA)],
-                        route: '/development',
+                        route: '/calendary',
                       ),
                       _AdTopic(
                         title: 'Preposiciones',
                         description: 'Manejo del tiempo en LSM.',
-                        icon: Icons.calendar_view_month,
+                        image: 'assets/icon/topics/preposiciones.png',
                         gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)],
                         route: '/development',
                       ),
@@ -148,16 +152,19 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                     children: const [
                       _AddCategory(
                         title: "Indicaciones dentro del salón",
+                        image:'assets/icon/topics/indicaciones3.png',
                         backgroundColor: Colors.green,
                         route: '/development',
                       ),
                       _AddCategory(
                         title: "Preguntas frecuentes",
+                         image:'assets/icon/topics/preguntas.png',
                         backgroundColor: Colors.orangeAccent,
                         route: '/development',
                       ),
                       _AddCategory(
                         title: "Glosario de materias!",
+                         image:'assets/icon/topics/glosario2.png',
                         backgroundColor: Colors.purpleAccent,
                         route: '/development',
                       ),
@@ -176,7 +183,7 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
 class _AdTopic extends StatelessWidget {
   final String title;
   final String description;
-  final IconData icon;
+  final String image;
   final List<Color> gradientColors;
   final String route;
 
@@ -184,7 +191,7 @@ class _AdTopic extends StatelessWidget {
     Key? key,
     required this.title,
     required this.description,
-    required this.icon,
+    required this.image,
     required this.gradientColors,
     required this.route,
   }) : super(key: key);
@@ -218,7 +225,12 @@ class _AdTopic extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: Colors.white, size: 36.0),
+              // Icon(icon, color: Colors.white, size: 36.0),
+              Image.asset(
+                image,
+                height: 50.0, // Ajusta el tamaño según sea necesario
+                fit: BoxFit.cover,
+              ),
               const SizedBox(height: 12.0),
               Text(
                 title,
@@ -246,12 +258,14 @@ class _AdTopic extends StatelessWidget {
 
 class _AddCategory extends StatelessWidget {
   final String title;
+  final String image;
   final Color backgroundColor;
   final String route;
 
   const _AddCategory({
     Key? key,
     required this.title,
+    required this.image,
     required this.backgroundColor,
     required this.route,
   }) : super(key: key);
@@ -264,7 +278,7 @@ class _AddCategory extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.only(right: 16.0),
-        width: 240.0,
+        width: 250.0,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(16.0),
@@ -277,7 +291,7 @@ class _AddCategory extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -289,13 +303,21 @@ class _AddCategory extends StatelessWidget {
                 fontSize: 14.0,
               ),
             ),
-            const SizedBox(height: 8.0),
+            // const SizedBox(height: 8.0),
             Text(
               title,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 16.0,
+                fontSize: 14.0,
                 fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            Center(
+              child: Image.asset(
+                image,
+                height: 40.0, // Ajusta el tamaño según sea necesario
+                fit: BoxFit.cover,
               ),
             ),
           ],

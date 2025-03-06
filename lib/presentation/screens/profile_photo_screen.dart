@@ -83,42 +83,57 @@ class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Editar Foto de Perfil")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 130,
-              backgroundImage: _imagenTemporal != null
-                  ? FileImage(_imagenTemporal!)
-                  : (_imagenGuardada != null
-                      ? FileImage(_imagenGuardada!)
-                      : null),
-              child: (_imagenTemporal == null && _imagenGuardada == null)
-                  ? const Icon(Icons.person, size: 60)
-                  : null,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.camera_alt),
-              label: const Text("Tomar Foto"),
-              onPressed: _tomarFoto,
-            ),
-            const SizedBox(height: 10),
-            if (_imagenTemporal != null)
-              ElevatedButton.icon(
-                icon: const Icon(Icons.save),
-                label: const Text("Utilizar Foto"),
-                onPressed: _guardarImagen,
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              ),
-          ],
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    extendBodyBehindAppBar: true, // Extiende el body detrás del AppBar
+    appBar: AppBar(
+      title: const Text("Editar Foto de Perfil", style: TextStyle(color: Colors.white),),
+      backgroundColor: Colors.transparent, // Hace que el AppBar sea transparente
+      elevation: 0, // Quita la sombra del AppBar
+    ),
+    body: Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blue[900]!, Colors.blueAccent],
+          begin: Alignment.topCenter, // Inicia el degradado desde arriba
+          end: Alignment.bottomCenter,
         ),
       ),
-    );
-  }
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 130,
+            backgroundImage: _imagenTemporal != null
+                ? FileImage(_imagenTemporal!)
+                : (_imagenGuardada != null
+                    ? FileImage(_imagenGuardada!)
+                    : null),
+            child: (_imagenTemporal == null && _imagenGuardada == null)
+                ? const Icon(Icons.person, size: 60)
+                : null,
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.camera_alt),
+            label: const Text("Tomar Foto"),
+            onPressed: _tomarFoto,
+          ),
+          const SizedBox(height: 10),
+          if (_imagenTemporal != null)
+            ElevatedButton.icon(
+              icon: const Icon(Icons.save),
+              label: const Text("Utilizar Foto"),
+              onPressed: _guardarImagen,
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+            ),
+        ],
+      ),
+    ),
+  );
+}
+
 }

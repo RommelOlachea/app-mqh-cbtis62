@@ -5,13 +5,13 @@ import 'package:mqh_rommel/controllers/auth_controller.dart';
 import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
 import 'package:mqh_rommel/utils/utils_app.dart';
 
-class AlphabetScreen extends ConsumerStatefulWidget {
+class MonthsScreen extends ConsumerStatefulWidget {
   @override
-  _AlphabetScreenState createState() => _AlphabetScreenState();
+  _MonthsScreenState createState() => _MonthsScreenState();
 }
 
-class _AlphabetScreenState extends ConsumerState<AlphabetScreen> {
-  final Map<String, String> mediaList = AppConstants().alphabetic;
+class _MonthsScreenState extends ConsumerState<MonthsScreen> {
+  final Map<String, String> mediaList = AppConstants().months;
 
   int currentIndex = 0;
 
@@ -32,26 +32,24 @@ class _AlphabetScreenState extends ConsumerState<AlphabetScreen> {
   }
 
   String _getLetterFromMedia(String media) {
-    return media.split('/').last.split('.').first.toUpperCase();
+    return media.split('/').last.split('.').first.toUpperCase()[0];
   }
 
   @override
   Widget build(BuildContext context) {
-
     String imageProfile =
         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
 
     final currentMedia = mediaList.keys.elementAt(currentIndex);
-
     final currentLetter = _getLetterFromMedia(currentMedia);
 
-    final description = mediaList[currentMedia];
+    final  description =  mediaList[currentMedia];
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text(
-          'Abecedario LSM',
+          'Meses LSM',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
@@ -67,7 +65,6 @@ class _AlphabetScreenState extends ConsumerState<AlphabetScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-
       body: GestureDetector(
         onHorizontalDragEnd: (details) {
           if (details.primaryVelocity! < 0) {
@@ -84,7 +81,7 @@ class _AlphabetScreenState extends ConsumerState<AlphabetScreen> {
               end: Alignment.bottomCenter,
             ),
           ),
-          padding: const EdgeInsets.all(20.0),
+          padding:const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -158,9 +155,7 @@ class _AlphabetScreenState extends ConsumerState<AlphabetScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20,),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(16),
