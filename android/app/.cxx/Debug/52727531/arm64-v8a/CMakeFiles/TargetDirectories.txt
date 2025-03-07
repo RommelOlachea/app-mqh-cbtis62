@@ -1,0 +1,2 @@
+C:/Users/Manuel/Desktop/prototipos/app-mqh-cbtis62/android/app/.cxx/Debug/52727531/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Manuel/Desktop/prototipos/app-mqh-cbtis62/android/app/.cxx/Debug/52727531/arm64-v8a/CMakeFiles/rebuild_cache.dir
