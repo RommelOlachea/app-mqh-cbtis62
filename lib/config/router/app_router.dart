@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/presentation/authenticate/authenticate.dart';
 import 'package:mqh_rommel/presentation/screens/profile_photo_screen.dart';
+import 'package:mqh_rommel/presentation/screens/topics/prepositions.dart';
 import '../../presentation/screens/screens.dart';
 import '../../presentation/screens/topics/topics.dart';
 
@@ -91,7 +92,12 @@ final appRouter = GoRouter(
       name: 'preferences',      
       path: '/preferences',
       builder: (context, state) =>  PreferencesScreen(),
-    ),    
+    ), 
+    GoRoute(
+        name: 'prepositions',
+        path: '/prepositions',
+        builder: (context, state) => Prepositions(),
+    ),  
   ],
 );
 

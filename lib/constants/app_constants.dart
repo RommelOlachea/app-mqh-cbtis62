@@ -87,6 +87,9 @@ class AppConstants {
     'assets/topics/calendar/months/noviembre.gif': 'NOVIEMBRE Se hace una letra u, y se rota la muñeca a los lados.',
     'assets/topics/calendar/months/diciembre.gif': 'DICIEMBRE Se hace una letra d, y se rota la muñeca a los lados.',
   };
+  final Map<String, String> prepositions ={
+
+  };
 
 
 }
