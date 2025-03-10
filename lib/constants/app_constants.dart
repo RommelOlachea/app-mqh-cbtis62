@@ -53,39 +53,39 @@ class AppConstants {
     'assets/topics/numbers/18.gif': 'DIECIOCHO Se hace el número 8 con la punta de los dedos señalando al frente, y se mueve hacia adelante',
     'assets/topics/numbers/19.gif': 'DIECINUEVE Se hace el número 4 con la punta de los dedos señalando al frente, y se mueve hacia adelante.',
     'assets/topics/numbers/20.gif': 'VEINTE Con el puño cerrado y los dedos pulgar e Indice estirados, forma una "C" y los pellizcas repetidamente',
-    'assets/topics/numbers/100.gif': 'Cien Se estira el índice, y se mueve a un lado hasta transformarse en c.',
+    'assets/topics/numbers/100.gif': 'CIEN Se estira el índice, y se mueve a un lado hasta transformarse en c.',
   };
 
  final Map<String, String> dayofsweek = {
-    'assets/topics/calendar/week/lunes.gif': 'LUNES descripcion...',
-    'assets/topics/calendar/week/martes.gif': 'MARTES descripcion...',
-    'assets/topics/calendar/week/miercoles.gif': 'MIERCOLES descripcion...',
-    'assets/topics/calendar/week/jueves.gif': 'JUEVES descripcion...',
-    'assets/topics/calendar/week/viernes.gif': 'VIERNES descripcion...',
-    'assets/topics/calendar/week/sabado.gif': 'SABADO descripcion...',
-    'assets/topics/calendar/week/domingo.gif': 'DOMINGO descripcion...',
+    'assets/topics/calendar/week/lunes.gif': 'LUNES Se hace una letra l, y se mueve en círculo.',
+    'assets/topics/calendar/week/martes.gif': 'MARTES Se hace una letra l con el dedo medio estirado, y se mueve en círculo.',
+    'assets/topics/calendar/week/miercoles.gif': 'MIERCOLES Se hace una letra l con los dedos medio, anular y meñique estirados, y se mueve en círculo.',
+    'assets/topics/calendar/week/jueves.gif': 'JUEVES Se hace una letra j, y se mueve en círculo.',
+    'assets/topics/calendar/week/viernes.gif': 'VIERNES Se hace una letra v, y se mueve en círculo.',
+    'assets/topics/calendar/week/sabado.gif': 'SABADO Se hace una letra s, y se mueve en círculo.',
+    'assets/topics/calendar/week/domingo.gif': 'DOMINGO Se hace una letra d, y se mueve en circulo.',
   };
 
  final Map<String, String> seasons = {
-    'assets/topics/calendar/seasons/primavera.gif': 'PRIMAVERA descripcion...',
-    'assets/topics/calendar/seasons/verano.gif': 'VERANO descripcion...',    
-    'assets/topics/calendar/seasons/otono.gif': 'ATOÑO descripcion...',
-    'assets/topics/calendar/seasons/invierno.gif': 'INVIERNO descripcion...',
+    'assets/topics/calendar/seasons/primavera.gif': 'PRIMAVERA Se hce un capullo en ambas manos y se mueve hacia arriba mientras se va abriendo.',
+    'assets/topics/calendar/seasons/verano.gif': 'VERANO Con el dedo indice estirado recorre la frente como quitandose el sudor.',    
+    'assets/topics/calendar/seasons/otono.gif': 'OTOÑO Se coloca la mano abierta, representando un árbol. Luego se simula con los pulgares e índices las hojas que caen del árbol.',
+    'assets/topics/calendar/seasons/invierno.gif': 'INVIERNO Se simula que se coloca una bufanda sobre el hombro. Luego se hace una f con ambas manos, y se hacen vibrar en su lugar como.',
   };
 
  final Map<String, String> months = {
-    'assets/topics/calendar/months/enero.gif': 'ENERO descripcion...',
-    'assets/topics/calendar/months/febrero.gif': 'FEBRERO descripcion...',
-    'assets/topics/calendar/months/marzo.gif': 'MARZO descripcion...',
-    'assets/topics/calendar/months/abril.gif': 'ABRIL descripcion...',
-    'assets/topics/calendar/months/mayo.gif': 'MAYO descripcion...',
-    'assets/topics/calendar/months/junio.gif': 'JUNIO descripcion...',
-    'assets/topics/calendar/months/julio.gif': 'JULIO descripcion...',
-    'assets/topics/calendar/months/agosto.gif': 'AGOSTO descripcion...',
-    'assets/topics/calendar/months/septiembre.gif': 'SEPTIEMBRE descripcion...',
-    'assets/topics/calendar/months/octubre.gif': 'OCTUBRE descripcion...',
-    // 'assets/topics/calendar/months/noviembre.gif': 'NOVIEMBRE descripcion...',
-    'assets/topics/calendar/months/diciembre.gif': 'DICIEMBRE descripcion...',
+    'assets/topics/calendar/months/enero.gif': 'ENERO Se hace una letra e, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/febrero.gif': 'FEBRERO Se hace una letra f, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/marzo.gif': 'MARZO Se hace una letra m, y se mueve en circulos alrededor de la oreja.',
+    'assets/topics/calendar/months/abril.gif': 'ABRIL Se hace una letra a, y se mueve en círculo alrededor de la oreja.',
+    'assets/topics/calendar/months/mayo.gif': 'MAYO Se hace una letra m, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/junio.gif': 'JUNIO Se hace una letra i, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/julio.gif': 'JULIO Se hace una letra i con el pulgar y el índice y se rota la muñeca a lso lados.',
+    'assets/topics/calendar/months/agosto.gif': 'AGOSTO Se hace una letra a, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/septiembre.gif': 'SEPTIEMBRE Se hace una letra s, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/octubre.gif': 'OCTUBRE Se hace una letra o, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/noviembre.gif': 'NOVIEMBRE Se hace una letra u, y se rota la muñeca a los lados.',
+    'assets/topics/calendar/months/diciembre.gif': 'DICIEMBRE Se hace una letra d, y se rota la muñeca a los lados.',
   };
 
 
