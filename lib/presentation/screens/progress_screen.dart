@@ -13,7 +13,6 @@ class ProgressScreen extends ConsumerStatefulWidget {
 }
 
 class _ProgressScreenState extends ConsumerState<ProgressScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -26,7 +25,6 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
 
     String username = ref.watch(authControllerProvider)!.name;
 
-
     // Simulación de experiencia y la experiencia total para el siguiente nivel
     double currentExp =
         50; // Experiencia actual (puedes cambiar este valor dinámicamente)
@@ -35,8 +33,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
 
     // Cálculo del porcentaje de progreso
     double progress = currentExp / totalExpForNextLevel;
-    
-    
+
     return Scaffold(
       body: Container(
         // Fondo con gradiente
@@ -65,12 +62,17 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                     ),
                     child: Center(
                       // Aseguramos que esté centrado
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 70,),
-                          UserAvatarImage(imageProfile: imageProfile, radius : 90, color: Colors.purple, width: 5,),
-                          ]
-                      ),
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 70,
+                        ),
+                        UserAvatarImage(
+                          imageProfile: imageProfile,
+                          radius: 90,
+                          color: Colors.purple,
+                          width: 5,
+                        ),
+                      ]),
                     ),
                   ),
                 ),
@@ -225,23 +227,6 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                           ),
                         ],
                       ),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          context.push('/preferences');
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "Preferencias",
-                          style: TextStyle(
-                            color: Colors.white, // Texto blanco
-                            fontSize: 18, // Tamaño del texto
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 20), // Espacio entre los botones
                     // Botón para editar foto de perfil
@@ -266,23 +251,6 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                           ),
                         ],
                       ),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          context.push('/profilephoto');
-                        },
-                        icon: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "Editar Foto de Perfil",
-                          style: TextStyle(
-                            color: Colors.white, // Texto blanco
-                            fontSize: 18, // Tamaño del texto
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                     ),
                     const SizedBox(height: 20),
                     Container(
@@ -306,32 +274,33 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                           ),
                         ],
                       ),
-                      child: TextButton.icon(
-                        onPressed: () async {
-                          final authController =
-                              ref.read(authControllerProvider.notifier);
-                          authController.logout();
-                          context.go('/login');
-                        },
-                        icon: const Icon(
-                          Icons.logout,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "Cerrar Sesión",
-                          style: TextStyle(
-                            color: Colors.white, // Texto blanco
-                            fontSize: 18, // Tamaño del texto
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: Container(
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+            colors: [Colors.purpleAccent, Colors.purple],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: FloatingActionButton(
+          onPressed: () {
+            context.push('/preferences');
+          },
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: const Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
         ),
       ),
     );

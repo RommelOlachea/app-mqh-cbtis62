@@ -32,6 +32,14 @@ class AppConstants {
     'assets/topics/alphabet/Z.gif' : 'Z Con la mano cerrada, el dedo índice estirado y la palma al frente, se dibuja una letra z en el aire.',
   };
 
+  final Map<String, String> vocals = {
+    'assets/topics/alphabet/A.jpg' : 'A Con la mano cerrada, se muestran las uñas y se estira el dedo pulgar hacia un lado. La palma mira al frente',    
+    'assets/topics/alphabet/E.jpg' : 'E Se doblan los dedos completamente, y se muestran las uñas. La palma mira al frente',
+    'assets/topics/alphabet/I.jpg' : 'I Con la mano cerrada, el dedo meñique se estira señalando hacia arriba. La palma se pone de lado.',    
+    'assets/topics/alphabet/O.jpg' : 'O Con la mano se forma una letra o. Todos los dedos se tocan por las puntas.',    
+    'assets/topics/alphabet/U.jpg' : 'U Con la mano cerrada, se estiran los dedos índice y medio unidos. La palma mira al frente.',    
+  };
+
  final Map<String, String> numbers = {
     'assets/topics/numbers/1.jpg': 'UNO Se estira el índice con la palma al frente.',
     'assets/topics/numbers/2.jpg': 'DOS Se estiran los dedos índice y medio.',
@@ -87,6 +95,34 @@ class AppConstants {
     // 'assets/topics/calendar/months/noviembre.gif': 'NOVIEMBRE descripcion...',
     'assets/topics/calendar/months/diciembre.gif': 'DICIEMBRE descripcion...',
   };
+
+ final Map<String, String> prepositions = {
+    'assets/topics/calendar/week/lunes.gif': 'LUNES descripcion...',
+    'assets/topics/calendar/week/martes.gif': 'MARTES descripcion...',
+    'assets/topics/calendar/week/miercoles.gif': 'MIERCOLES descripcion...',
+    'assets/topics/calendar/week/jueves.gif': 'JUEVES descripcion...',
+    'assets/topics/calendar/week/viernes.gif': 'VIERNES descripcion...',
+    'assets/topics/calendar/week/sabado.gif': 'SABADO descripcion...',
+    'assets/topics/calendar/week/domingo.gif': 'DOMINGO descripcion...',
+  };  
+
+ final Map<String, String> glossary = {
+    "Abstracción": "enero.gif",
+    "Algoritmo": "enero.gif",
+    "Variable": "enero.gif",
+    "Depuración": "enero.gif",
+    "Compilador": "enero.gif",
+    "salon": "enero.gif",
+    "silla": "enero.gif",
+    "maestro": "enero.gif",
+    "direccion": "enero.gif",
+    "matematicas": "enero.gif",
+    "computadora": "enero.gif",
+    "programacion": "enero.gif",
+    "docente": "enero.gif",
+    "compañero": "enero.gif",
+    "plaza": "enero.gif",
+  }; 
 
 
 }

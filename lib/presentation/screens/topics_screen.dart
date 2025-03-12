@@ -125,7 +125,7 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                         description: 'Manejo del tiempo en LSM.',
                         image: 'assets/icon/topics/preposiciones.png',
                         gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)],
-                        route: '/development',
+                        route: '/prepositions',
                       ),
                     ],
                   ),
@@ -153,20 +153,20 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                       _AddCategory(
                         title: "Indicaciones dentro del salón",
                         image:'assets/icon/topics/indicaciones3.png',
-                        backgroundColor: Colors.green,
-                        route: '/development',
+                        gradientColors: [Color(0xFF66BB6A), Color(0xFF43A047)],
+                        route: '/instructions',
                       ),
                       _AddCategory(
                         title: "Preguntas frecuentes",
                          image:'assets/icon/topics/preguntas.png',
-                        backgroundColor: Colors.orangeAccent,
-                        route: '/development',
+                        gradientColors:  [Color(0xFFFFA726), Color(0xFFFF7043)],
+                        route: '/questions',
                       ),
                       _AddCategory(
                         title: "Glosario de materias!",
                          image:'assets/icon/topics/glosario2.png',
-                        backgroundColor: Colors.purpleAccent,
-                        route: '/development',
+                        gradientColors:  [Color(0xFFBA68C8), Color(0xFF8E24AA)],
+                        route: '/glossary',
                       ),
                     ],
                   ),
@@ -259,14 +259,14 @@ class _AdTopic extends StatelessWidget {
 class _AddCategory extends StatelessWidget {
   final String title;
   final String image;
-  final Color backgroundColor;
+  final List<Color> gradientColors;
   final String route;
 
   const _AddCategory({
     Key? key,
     required this.title,
     required this.image,
-    required this.backgroundColor,
+    required this.gradientColors,
     required this.route,
   }) : super(key: key);
 
@@ -280,7 +280,11 @@ class _AddCategory extends StatelessWidget {
         margin: const EdgeInsets.only(right: 16.0),
         width: 250.0,
         decoration: BoxDecoration(
-          color: backgroundColor,
+          gradient: LinearGradient(
+              colors: gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           borderRadius: BorderRadius.circular(16.0),
           boxShadow: [
             BoxShadow(

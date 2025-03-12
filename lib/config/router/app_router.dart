@@ -1,6 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/presentation/authenticate/authenticate.dart';
+import 'package:mqh_rommel/presentation/screens/games/alphabetic_memory_game_screen.dart';
 import 'package:mqh_rommel/presentation/screens/profile_photo_screen.dart';
+import 'package:mqh_rommel/presentation/screens/profile_screen.dart';
+import 'package:mqh_rommel/presentation/screens/quizs/alphabetic_quiz_screen.dart';
+import 'package:mqh_rommel/presentation/screens/quizs/vocales_quiz_screen.dart';
+import 'package:mqh_rommel/presentation/screens/topics/instructions_screens.dart';
+import 'package:mqh_rommel/presentation/screens/topics/prepositions_screen.dart';
+import 'package:mqh_rommel/presentation/screens/topics/questions_screen.dart';
+import '../../presentation/screens/about/about.dart';
 import '../../presentation/screens/screens.dart';
 import '../../presentation/screens/topics/topics.dart';
 
@@ -68,6 +76,11 @@ final appRouter = GoRouter(
       builder: (context, state) =>  ProfilePhotoScreen(),
     ),    
     GoRoute(
+      name: 'profile',      
+      path: '/profile',
+      builder: (context, state) => const ProfileScreen(),
+    ),    
+    GoRoute(
       name: 'calendary',      
       path: '/calendary',
       builder: (context, state) =>  CalendaryScreen(),
@@ -86,11 +99,62 @@ final appRouter = GoRouter(
       name: 'seasons',      
       path: '/seasons',
       builder: (context, state) =>  SeasonsScreen(),
+    ), 
+    GoRoute(
+      name: 'glossary',      
+      path: '/glossary',
+      builder: (context, state) =>  GlossaryScreen(),
+    ),        
+    GoRoute(
+      name: 'questions',      
+      path: '/questions',
+      builder: (context, state) =>  QuestionsScreen(),
+    ),        
+    GoRoute(
+      name: 'instructions',      
+      path: '/instructions',
+      builder: (context, state) =>  InstructionsScreen(),
     ),    
+    GoRoute(
+      name: 'prepositions',      
+      path: '/prepositions',
+      builder: (context, state) =>  PrepositionsScreen(),
+    ),    
+
     GoRoute(
       name: 'preferences',      
       path: '/preferences',
-      builder: (context, state) =>  PreferencesScreen(),
+      builder: (context, state) =>  const PreferencesScreen(),
+    ),    
+    GoRoute(
+      name: 'privacypolicy',      
+      path: '/privacypolicy',
+      builder: (context, state) =>  PrivacyPolicyScreen(),
+    ),    
+    GoRoute(
+      name: 'termsofuse',      
+      path: '/termsofuse',
+      builder: (context, state) =>  const TermsOfUseScreen(),
+    ),    
+    GoRoute(
+      name: 'contact',      
+      path: '/contact',
+      builder: (context, state) =>  const ContactScreen(),
+    ),    
+    GoRoute(
+      name: 'alphabetquiz',      
+      path: '/alphabetquiz',
+      builder: (context, state) =>  AlphabetQuizScreen(),
+    ),    
+    GoRoute(
+      name: 'vocalquiz',      
+      path: '/vocalquiz',
+      builder: (context, state) =>  VocalesQuizScreen(),
+    ),    
+    GoRoute(
+      name: 'alphabeticgame',      
+      path: '/alphabeticgame',
+      builder: (context, state) =>  AlphabeticMemoryGameScreen(),
     ),    
   ],
 );

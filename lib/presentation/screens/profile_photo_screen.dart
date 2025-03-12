@@ -12,7 +12,7 @@ class ProfilePhotoScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
-  File? _imagenTemporal; // Imagen capturada pero aún no guardada
+  File? _imagenTemporal; // Imagen capturada o seleccionada pero aún no guardada
   File? _imagenGuardada; // Imagen guardada en almacenamiento local
 
   @override
@@ -21,12 +21,12 @@ class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
     _cargarImagenGuardada();
   }
 
-  //Método para tomar una foto con la cámara
+  // Método para tomar una foto con la cámara
   Future<void> _tomarFoto() async {
     final ImagePicker picker = ImagePicker();
     final XFile? imagen = await picker.pickImage(
       source: ImageSource.camera,
-      imageQuality: 70, //Reduce el peso del archivo sin perder mucha calidad
+      imageQuality: 70, // Reduce el peso del archivo sin perder mucha calidad
     );
 
     if (imagen != null) {
@@ -36,7 +36,22 @@ class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
     }
   }
 
-  //Método para guardar la imagen localmente
+  // Método para elegir una foto de la galería
+  Future<void> _elegirFotoDeGaleria() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? imagen = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70,
+    );
+
+    if (imagen != null) {
+      setState(() {
+        _imagenTemporal = File(imagen.path);
+      });
+    }
+  }
+
+  // Método para guardar la imagen localmente
   Future<void> _guardarImagen() async {
     if (_imagenTemporal == null) return;
 
@@ -54,7 +69,6 @@ class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
 
     setState(() {
       _imagenGuardada = File(path);
-      //_imagenGuardada = _imagenTemporal;
       _imagenTemporal = null; // Limpiamos la imagen temporal después de guardar
     });
 
@@ -66,7 +80,7 @@ class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
     );
   }
 
-  //Método para cargar la imagen guardada al iniciar la app
+  // Método para cargar la imagen guardada al iniciar la app
   Future<void> _cargarImagenGuardada() async {
     final directory = await getApplicationDocumentsDirectory();
     String imageProfile =
@@ -83,57 +97,73 @@ class _ProfilePhotoScreenState extends ConsumerState<ProfilePhotoScreen> {
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    extendBodyBehindAppBar: true, // Extiende el body detrás del AppBar
-    appBar: AppBar(
-      title: const Text("Editar Foto de Perfil", style: TextStyle(color: Colors.white),),
-      backgroundColor: Colors.transparent, // Hace que el AppBar sea transparente
-      elevation: 0, // Quita la sombra del AppBar
-    ),
-    body: Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[900]!, Colors.blueAccent],
-          begin: Alignment.topCenter, // Inicia el degradado desde arriba
-          end: Alignment.bottomCenter,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true, // Extiende el body detrás del AppBar
+      appBar: AppBar(
+        title: const Text(
+          "Editar Foto de Perfil",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent, // Hace que el AppBar sea transparente
+        elevation: 0, // Quita la sombra del AppBar
+      ),
+      body: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue[900]!, Colors.blueAccent],
+            begin: Alignment.topCenter, // Inicia el degradado desde arriba
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Se agrega un Container para el borde y padding
+            Container(
+              padding: const EdgeInsets.all(0.0), // Padding interior pequeño
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 3.0), // Borde blanco
+              ),
+              child: CircleAvatar(
+                radius: 130,
+                backgroundImage: _imagenTemporal != null
+                    ? FileImage(_imagenTemporal!)
+                    : (_imagenGuardada != null
+                        ? FileImage(_imagenGuardada!)
+                        : null),
+                child: (_imagenTemporal == null && _imagenGuardada == null)
+                    ? const Icon(Icons.person, size: 60)
+                    : null,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.camera_alt),
+              label: const Text("Tomar Foto"),
+              onPressed: _tomarFoto,
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.image),
+              label: const Text("Elegir de Galería"),
+              onPressed: _elegirFotoDeGaleria,
+            ),
+            const SizedBox(height: 10),
+            if (_imagenTemporal != null)
+              ElevatedButton.icon(
+                icon: const Icon(Icons.save),
+                label: const Text("Utilizar Foto"),
+                onPressed: _guardarImagen,
+                //style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
+              ),
+          ],
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 130,
-            backgroundImage: _imagenTemporal != null
-                ? FileImage(_imagenTemporal!)
-                : (_imagenGuardada != null
-                    ? FileImage(_imagenGuardada!)
-                    : null),
-            child: (_imagenTemporal == null && _imagenGuardada == null)
-                ? const Icon(Icons.person, size: 60)
-                : null,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.camera_alt),
-            label: const Text("Tomar Foto"),
-            onPressed: _tomarFoto,
-          ),
-          const SizedBox(height: 10),
-          if (_imagenTemporal != null)
-            ElevatedButton.icon(
-              icon: const Icon(Icons.save),
-              label: const Text("Utilizar Foto"),
-              onPressed: _guardarImagen,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
-            ),
-        ],
-      ),
-    ),
-  );
-}
-
+    );
+  }
 }

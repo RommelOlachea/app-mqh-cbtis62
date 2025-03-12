@@ -32,7 +32,7 @@ class _MonthsScreenState extends ConsumerState<MonthsScreen> {
   }
 
   String _getLetterFromMedia(String media) {
-    return media.split('/').last.split('.').first.toUpperCase()[0];
+    return media.split('/').last.split('.').first.toUpperCase();
   }
 
   @override
@@ -43,7 +43,7 @@ class _MonthsScreenState extends ConsumerState<MonthsScreen> {
     final currentMedia = mediaList.keys.elementAt(currentIndex);
     final currentLetter = _getLetterFromMedia(currentMedia);
 
-    final  description =  mediaList[currentMedia];
+    final description = mediaList[currentMedia];
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -59,7 +59,12 @@ class _MonthsScreenState extends ConsumerState<MonthsScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: UserAvatarImage(imageProfile: imageProfile, radius: 30, color: Colors.white, width: 1,),
+            child: UserAvatarImage(
+              imageProfile: imageProfile,
+              radius: 30,
+              color: Colors.white,
+              width: 1,
+            ),
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -81,21 +86,25 @@ class _MonthsScreenState extends ConsumerState<MonthsScreen> {
               end: Alignment.bottomCenter,
             ),
           ),
-          padding:const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 130),
-              CircleAvatar(
-                radius: 44,
-                backgroundColor: Colors.blue,
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.white,
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: Colors.blue, width: 2),
+                ),
+                elevation: 4,
+                color: Colors.white,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
-                    currentLetter,
+                    currentLetter, // La palabra completa a mostrar
                     style: const TextStyle(
-                      fontSize: 32,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
                     ),
@@ -155,7 +164,9 @@ class _MonthsScreenState extends ConsumerState<MonthsScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(16),

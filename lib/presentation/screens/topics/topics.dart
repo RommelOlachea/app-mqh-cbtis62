@@ -1,3 +1,5 @@
+export 'package:mqh_rommel/presentation/screens/topics/glossary_screen.dart';
+
 export 'package:mqh_rommel/presentation/screens/topics/seasons_screen.dart';
 
 export 'package:mqh_rommel/presentation/screens/topics/months_screen.dart';

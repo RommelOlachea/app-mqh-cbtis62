@@ -32,7 +32,7 @@ class _DaysOfWeekScreenState extends ConsumerState<DaysOfWeekScreen> {
   }
 
   String _getLetterFromMedia(String media) {
-    return media.split('/').last.split('.').first.toUpperCase()[0];
+    return media.split('/').last.split('.').first.toUpperCase();
   }
 
   @override
@@ -86,16 +86,20 @@ class _DaysOfWeekScreenState extends ConsumerState<DaysOfWeekScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 130),
-              CircleAvatar(
-                radius: 44,
-                backgroundColor: Colors.blue,
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.white,
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: Colors.blue, width: 2),
+                ),
+                elevation: 4,
+                color: Colors.white,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
-                    currentLetter,
+                    currentLetter, // La palabra completa a mostrar
                     style: const TextStyle(
-                      fontSize: 32,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
                     ),
@@ -158,7 +162,7 @@ class _DaysOfWeekScreenState extends ConsumerState<DaysOfWeekScreen> {
               const SizedBox(height: 20,),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.blueAccent,
                     borderRadius: BorderRadius.circular(10),
@@ -166,7 +170,7 @@ class _DaysOfWeekScreenState extends ConsumerState<DaysOfWeekScreen> {
                   child: SingleChildScrollView(
                     child: Text(
                       description ?? 'Sin descripción',
-                      style: TextStyle(fontSize: 19, color: Colors.white),
+                      style: const TextStyle(fontSize: 19, color: Colors.white),
                     ),
                   ),
                 ),
