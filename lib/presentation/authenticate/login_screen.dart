@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mqh_rommel/controllers/levels_controller.dart';
 import 'package:mqh_rommel/utils/utils.dart';
 import '../../controllers/auth_controller.dart';
 
@@ -34,6 +35,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         } else {
           SecureStorage.deleteToken();
         }
+        final levelController = ref.read(levelsControllerProvider.notifier);
+        levelController.fetchLevels(authController.state!.id!);  // Cargar niveles, en caso de existir
         context.go('/home'); // Redirigir al home
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

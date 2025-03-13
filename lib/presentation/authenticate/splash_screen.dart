@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/controllers/levels_controller.dart';
 import 'package:mqh_rommel/utils/secure_storage.dart';
 
 import 'package:video_player/video_player.dart';
@@ -46,6 +47,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         if (rememberMe != null && rememberMe.toLowerCase() == 'true') {
           String res = await authController.loginUserFromStorage();
           if (res == 'correcto') {
+            final levelController = ref.read(levelsControllerProvider.notifier);
+            levelController.fetchLevels(authController.state!.id!); // Cargar niveles, en caso de existir
             if (mounted) context.go('/home'); // Redirigir al home
           } else {
             authController.logout();
