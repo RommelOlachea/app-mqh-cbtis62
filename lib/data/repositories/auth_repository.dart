@@ -33,6 +33,7 @@ class AuthRepository {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    
     return resultado > 0 ? 'Registro exitoso' : 'Error al registrar';
   }
 

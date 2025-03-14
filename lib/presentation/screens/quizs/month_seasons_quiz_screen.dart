@@ -4,15 +4,18 @@ import 'package:mqh_rommel/constants/app_constants.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
 import 'package:mqh_rommel/controllers/levels_controller.dart';
 
-class AlphabetQuizScreen extends ConsumerStatefulWidget {
-  const AlphabetQuizScreen({Key? key}) : super(key: key);
+class MonthSeasonsQuizScreen extends ConsumerStatefulWidget {
+  const MonthSeasonsQuizScreen({Key? key}) : super(key: key);
 
   @override
-  _AlphabetQuizScreenState createState() => _AlphabetQuizScreenState();
+  _MonthSeasonsQuizScreenState createState() => _MonthSeasonsQuizScreenState();
 }
 
-class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
-  final Map<String, String> allLetters = AppConstants().alphabetic;
+class _MonthSeasonsQuizScreenState extends ConsumerState<MonthSeasonsQuizScreen> {
+  final Map<String, String> allLetters = {
+  ...AppConstants().seasons,
+  ...AppConstants().months,
+};
 
   late List<_Question> questions;
   int currentQuestionIndex = 0;
@@ -212,7 +215,7 @@ showDialog(
       // Aquí puedes actualizar el nivel del usuario
       levelsController.updateLevel(
         userId,
-        2,
+        8,
         completion: true,
         calification: scorePercentage,
       );

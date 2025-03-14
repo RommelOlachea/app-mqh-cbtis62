@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/controllers/levels_controller.dart';
+import 'package:mqh_rommel/data/models/levels_model.dart';
 import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
 import 'package:mqh_rommel/utils/utils_app.dart';
 
@@ -12,11 +14,16 @@ class LevelsScreen extends ConsumerStatefulWidget {
 }
 
 class _LevelsScreenState extends ConsumerState<LevelsScreen> {
+  
+
+
   @override
   Widget build(BuildContext context) {
     String imageProfile =
         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
-
+    final levels = ref.watch(levelsControllerProvider);
+    
+    
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -69,6 +76,7 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                     gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)],
                     image: 'assets/icon/topics/abecedario2.png',
                     route: '/vocalquiz',
+                    active: true,
                   ),
                   Row(
                     children: [
@@ -76,9 +84,10 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                         child: _buildLevel(
                           title: 'Nivel 2',
                           subtitle: 'Reforzando el abecedario',
-                          color: Colors.orange,
+                          color: (levels?.level1 ?? false) ? Colors.orange : Colors.grey,
                           image: 'assets/icon/topics/abecedario.png',
                           route: '/alphabetquiz',
+                          active: levels?.level1 ?? false,
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -86,9 +95,10 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                         child: _buildLevel(
                           title: 'Nivel 3',
                           subtitle: 'Juego de memoria del abecedario',
-                          color: Colors.green,
+                          color: (levels?.level2 ?? false) ? Colors.green : Colors.grey,
                           image: 'assets/icon/game/memoria.png',
                           route: '/alphabeticgame',
+                          active: levels?.level2 ?? false,
                         ),
                       ),
                     ],
@@ -98,29 +108,32 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                   _buildFullWidthLevel(
                     title: 'Nivel 4',
                     subtitle: 'Aprendiendo los números [1-10]',
-                    gradientColors: [Color(0xFFBA68C8), Color(0xFF8E24AA)],
+                    gradientColors: (levels?.level3 ?? false) ?  [Color(0xFFBA68C8), Color(0xFF8E24AA)] : [Colors.grey, Colors.grey],
                     image: 'assets/icon/topics/numeros.png',
-                    route: '/testLevel4',
+                    route: '/numbersaquiz',
+                    active: levels?.level3 ?? false,
                   ),
                   Row(
                     children: [
                       Expanded(
                         child: _buildLevel(
                           title: 'Nivel 5',
-                          subtitle: 'Aprendiendo los números [1-20, 100]',
-                          color: Colors.blue,
+                          subtitle: 'Aprendiendo los números [11-20, 100]',
+                          color: (levels?.level4 ?? false) ? Colors.blue : Colors.grey,
                           image: 'assets/icon/topics/abecedario.png',
-                          route: '/testLevel5',
+                          route: '/numbersbquiz',
+                          active: levels?.level4 ?? false,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: _buildLevel(
                           title: 'Nivel 6',
-                          subtitle: 'Aprendiendo los números',
-                          color: Colors.blueGrey,
+                          subtitle: 'Juego de memoria de los números',
+                          color: (levels?.level5 ?? false) ? Colors.blueGrey : Colors.grey,
                           image: 'assets/icon/game/memoria.png',
-                          route: '/testLevel6',
+                          route: '/numbersgame',
+                          active: levels?.level5 ?? false,
                         ),
                       ),
                     ],
@@ -130,9 +143,10 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                   _buildFullWidthLevel(
                     title: 'Nivel 7',
                     subtitle: 'Aprendiendo los días de la semana',
-                    gradientColors: [Color(0xFFFF8A65), Color(0xFFD84315)],
+                    gradientColors: (levels?.level6 ?? false) ? [Color(0xFFFF8A65), Color(0xFFD84315)] : [Colors.grey, Colors.grey],
                     image: 'assets/icon/topics/calendary2.png',
-                    route: '/testLevel7',
+                    route: '/daysweekquiz',
+                    active: levels?.level6 ?? false, 
                   ),
                   Row(
                     children: [
@@ -140,9 +154,10 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                         child: _buildLevel(
                           title: 'Nivel 8',
                           subtitle: 'Meses y estaciones del año',
-                          color: Colors.orange,
+                          color: (levels?.level7 ?? false) ? Colors.orange : Colors.grey,
                           image: 'assets/icon/topics/month.png',
-                          route: '/testLevel8',
+                          route: '/monthseasonsquiz',
+                          active: levels?.level7 ?? false,
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -150,12 +165,26 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
                         child: _buildLevel(
                           title: 'Nivel 9',
                           subtitle: 'Memoria del calendario',
-                          color: Colors.green,
+                          color: (levels?.level8 ?? false) ? Colors.green : Colors.grey,
                           image: 'assets/icon/topics/seasons2.png',
-                          route: '/testLevel9',
+                          route: '/calendargame',
+                          active: levels?.level8 ?? false,
                         ),
                       ),
                     ],
+                  ),
+                ]),
+                _buildSection("Preposiciones", [
+                  _buildFullWidthLevel(
+                    title: 'Nivel 10',
+                    subtitle: 'Aprendiendo las preposiciones',
+                    gradientColors: (levels?.level9 ?? false) ? [Color(0xFFFF8A65), Color(0xFFD84315)] : [Colors.grey, Colors.grey],
+                    image: 'assets/icon/topics/preposiciones.png',
+                    route: '/daysweekquiz',
+                    active: levels?.level9 ?? false, 
+                  ),
+                  const Row(
+                    children: [],
                   ),
                 ]),
               ],
@@ -196,10 +225,11 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
     required List<Color> gradientColors,
     required String image,
     required String route,
+    required bool active,
   }) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(route);
+        if(active)GoRouter.of(context).push(route);
       },
       child: Container(
         width: double.infinity,
@@ -260,10 +290,11 @@ class _LevelsScreenState extends ConsumerState<LevelsScreen> {
     required Color color,
     required String image,
     required String route,
+    required bool active,
   }) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(route);
+        if(active)GoRouter.of(context).push(route);
       },
       child: Container(
         decoration: BoxDecoration(

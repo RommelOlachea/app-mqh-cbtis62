@@ -26,7 +26,7 @@ class LevelsRepository {
   Future<int> updateLevel(
     String userId,
     int levelNumber, {
-    required int completion,
+    required bool completion,
     required double calification,
   }) async {
     final db = await DatabaseHelper().database;
@@ -68,4 +68,37 @@ class LevelsRepository {
     }
     return false;
   }
+
+/// Inserta un nuevo registro de niveles para un usuario si no existe.
+  Future<void> insertOrInitializeLevels(String userId) async {
+    final db = await DatabaseHelper().database;
+
+    // Verificar si el usuario ya tiene un registro en 'levels'
+    final List<Map<String, dynamic>> existingRecords = await db.query(
+      'levels',
+      where: 'user_id = ?',
+      whereArgs: [userId],
+    );
+
+    if (existingRecords.isEmpty) {
+      // Crear un mapa con los valores por defecto
+      Map<String, dynamic> newUserLevels = {
+        'user_id': userId,
+        'level1': false, 'calification1': 0.0,
+        'level2': false, 'calification2': 0.0,
+        'level3': false, 'calification3': 0.0,
+        'level4': false, 'calification4': 0.0,
+        'level5': false, 'calification5': 0.0,
+        'level6': false, 'calification6': 0.0,
+        'level7': false, 'calification7': 0.0,
+        'level8': false, 'calification8': 0.0,
+        'level9': false, 'calification9': 0.0,
+      };
+
+      // Insertar el registro en la base de datos
+      await db.insert('levels', newUserLevels);
+    }
+  }
+
+
 }

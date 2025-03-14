@@ -5,17 +5,21 @@ import 'package:mqh_rommel/constants/app_constants.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
 import 'package:mqh_rommel/controllers/levels_controller.dart';
 
-class AlphabeticMemoryGameScreen extends ConsumerStatefulWidget {
-  const AlphabeticMemoryGameScreen({Key? key}) : super(key: key);
+class CalendarMemoryGameScreen extends ConsumerStatefulWidget {
+  const CalendarMemoryGameScreen({Key? key}) : super(key: key);
 
   @override
-  _AlphabeticMemoryGameScreenState createState() =>
-      _AlphabeticMemoryGameScreenState();
+  _CalendarMemoryGameScreenState createState() =>
+      _CalendarMemoryGameScreenState();
 }
 
-class _AlphabeticMemoryGameScreenState
-    extends ConsumerState<AlphabeticMemoryGameScreen> {
-  final Map<String, String> allLetters = AppConstants().alphabetic;
+class _CalendarMemoryGameScreenState
+    extends ConsumerState<CalendarMemoryGameScreen> {
+  final Map<String, String> allLetters = {
+  ...AppConstants().seasons,
+  ...AppConstants().months,
+  ...AppConstants().dayofsweek,
+};
 
   // Lista de tarjetas
   late List<_MemoryCard> _cards;
@@ -127,7 +131,7 @@ class _AlphabeticMemoryGameScreenState
 
       levelsController.updateLevel(
         userId,
-        3,
+        9,
         completion: true,
         calification: 100.0,
       );

@@ -39,29 +39,30 @@ class DatabaseHelper {
         token TEXT
       )
     ''');
-    await db.execute('''
-      CREATE TABLE levels (
-        user_id TEXT PRIMARY KEY,
-        level1 INTEGER NOT NULL DEFAULT 0,
-        calification1 REAL NOT NULL DEFAULT 0.0,
-        level2 INTEGER NOT NULL DEFAULT 0,
-        calification2 REAL NOT NULL DEFAULT 0.0,
-        level3 INTEGER NOT NULL DEFAULT 0,
-        calification3 REAL NOT NULL DEFAULT 0.0,
-        level4 INTEGER NOT NULL DEFAULT 0,
-        calification4 REAL NOT NULL DEFAULT 0.0,
-        level5 INTEGER NOT NULL DEFAULT 0,
-        calification5 REAL NOT NULL DEFAULT 0.0,
-        level6 INTEGER NOT NULL DEFAULT 0,
-        calification6 REAL NOT NULL DEFAULT 0.0,
-        level7 INTEGER NOT NULL DEFAULT 0,
-        calification7 REAL NOT NULL DEFAULT 0.0,
-        level8 INTEGER NOT NULL DEFAULT 0,
-        calification8 REAL NOT NULL DEFAULT 0.0,
-        level9 INTEGER NOT NULL DEFAULT 0,
-        calification9 REAL NOT NULL DEFAULT 0.0,
-        FOREIGN KEY (user_id) REFERENCES usuarios(id)
-      )
-    ''');
+await db.execute('''
+  CREATE TABLE levels (
+    user_id TEXT PRIMARY KEY,
+    level1 INTEGER NOT NULL DEFAULT 0,  -- BOOLEAN en SQLite es INTEGER (0=false, 1=true)
+    calification1 REAL NOT NULL DEFAULT 0.0,
+    level2 INTEGER NOT NULL DEFAULT 0,
+    calification2 REAL NOT NULL DEFAULT 0.0,
+    level3 INTEGER NOT NULL DEFAULT 0,
+    calification3 REAL NOT NULL DEFAULT 0.0,
+    level4 INTEGER NOT NULL DEFAULT 0,
+    calification4 REAL NOT NULL DEFAULT 0.0,
+    level5 INTEGER NOT NULL DEFAULT 0,
+    calification5 REAL NOT NULL DEFAULT 0.0,
+    level6 INTEGER NOT NULL DEFAULT 0,
+    calification6 REAL NOT NULL DEFAULT 0.0,
+    level7 INTEGER NOT NULL DEFAULT 0,
+    calification7 REAL NOT NULL DEFAULT 0.0,
+    level8 INTEGER NOT NULL DEFAULT 0,
+    calification8 REAL NOT NULL DEFAULT 0.0,
+    level9 INTEGER NOT NULL DEFAULT 0,
+    calification9 REAL NOT NULL DEFAULT 0.0,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+  )
+''');
+
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/controllers/levels_controller.dart';
 
 
 
@@ -25,12 +26,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Future<void> _registerUser() async {
     if (_formKey.currentState!.validate()) {
       final authController = ref.read(authControllerProvider.notifier);
-      
+
       String response = await authController.register(
         nameController.text,
         emailController.text,
         passwordController.text,
       );
+      
+      
+      
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(response)),

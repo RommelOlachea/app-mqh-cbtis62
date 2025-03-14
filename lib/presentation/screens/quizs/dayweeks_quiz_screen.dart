@@ -4,15 +4,15 @@ import 'package:mqh_rommel/constants/app_constants.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
 import 'package:mqh_rommel/controllers/levels_controller.dart';
 
-class AlphabetQuizScreen extends ConsumerStatefulWidget {
-  const AlphabetQuizScreen({Key? key}) : super(key: key);
+class DaysWeekQuizScreen extends ConsumerStatefulWidget {
+  const DaysWeekQuizScreen({Key? key}) : super(key: key);
 
   @override
-  _AlphabetQuizScreenState createState() => _AlphabetQuizScreenState();
+  _DaysWeekQuizScreenState createState() => _DaysWeekQuizScreenState();
 }
 
-class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
-  final Map<String, String> allLetters = AppConstants().alphabetic;
+class _DaysWeekQuizScreenState extends ConsumerState<DaysWeekQuizScreen> {
+  final Map<String, String> allLetters = AppConstants().dayofsweek;
 
   late List<_Question> questions;
   int currentQuestionIndex = 0;
@@ -29,7 +29,7 @@ class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
   void _generateQuestions() {
     final entries = allLetters.entries.toList()..shuffle();
     // Tomamos 10 (o el total, si hay menos de 10).
-    final selected = entries.take(10).toList();
+    final selected = entries.take(7).toList();
 
     questions = selected.map((entry) {
       final imagePath = entry.key;
@@ -69,40 +69,42 @@ class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
     }
 
     // Muestra un cuadro de diálogo indicando si fue correcto o no
-showDialog(
-  context: context,
-  barrierDismissible: false, // Deshabilita cerrar al tocar fuera
-  builder: (_) => AlertDialog(
-    title: Text(isCorrect ? "¡Correcto!" : "Incorrecto"),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Mensaje de texto
-        isCorrect
-            ? const Text("¡Bien hecho! Esa es la respuesta correcta.")
-            : Text("La respuesta correcta era: ${currentQuestion.correctLetter}"),
-        const SizedBox(height: 16),
-        // Imagen según sea correcto o incorrecto
-        Image.asset(
-          isCorrect ? 'assets/icon/quiz/correcto.png' : 'assets/icon/quiz/incorrecto1.png',
-          width: 100,
-          height: 100,
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Deshabilita cerrar al tocar fuera
+      builder: (_) => AlertDialog(
+        title: Text(isCorrect ? "¡Correcto!" : "Incorrecto"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Mensaje de texto
+            isCorrect
+                ? const Text("¡Bien hecho! Esa es la respuesta correcta.")
+                : Text(
+                    "La respuesta correcta era: ${currentQuestion.correctLetter}"),
+            const SizedBox(height: 16),
+            // Imagen según sea correcto o incorrecto
+            Image.asset(
+              isCorrect
+                  ? 'assets/icon/quiz/correcto.png'
+                  : 'assets/icon/quiz/incorrecto1.png',
+              width: 100,
+              height: 100,
+            ),
+          ],
         ),
-      ],
-    ),
-    actions: [
-      TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-          _goToNextQuestion();
-        },
-        child: const Text("OK"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _goToNextQuestion();
+            },
+            child: const Text("OK"),
+          ),
+        ],
       ),
-    ],
-  ),
-);
-
+    );
   }
 
   /// Avanza a la siguiente pregunta o finaliza el quiz
@@ -169,24 +171,25 @@ showDialog(
                     margin:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: ListTile(
-                             leading: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.asset(
-                                            height: 35,
-                                            width: 35,
-                                            'assets/icon/quiz/check3.png', // Ajusta la ruta de tu imagen
-                                            fit: BoxFit.cover,
-                                          ),
-                              ),                      
+                      leading: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          height: 35,
+                          width: 35,
+                          'assets/icon/quiz/check3.png', // Ajusta la ruta de tu imagen
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       title: Text(
                         option,
                         style: const TextStyle(
-                          color: Colors.black54,
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                            color: Colors.black54,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
                       ),
                       onTap: () => _onOptionSelected(option),
                     ),
@@ -212,26 +215,31 @@ showDialog(
       // Aquí puedes actualizar el nivel del usuario
       levelsController.updateLevel(
         userId,
-        2,
+        7,
         completion: true,
         calification: scorePercentage,
       );
     }
 
     return Container(
-              decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[900]!, Colors.blueAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blue[900]!, Colors.blueAccent],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text("Resultado del Quiz", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500),),
-          backgroundColor: Colors.transparent
-        ),
+            title: const Text(
+              "Resultado del Quiz",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500),
+            ),
+            backgroundColor: Colors.transparent),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -239,31 +247,34 @@ showDialog(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
-                  passed
-                      ? Image.asset(
-                                            height: 110,
-                                            width: 110,
-                                            'assets/icon/quiz/check3.png', // Ajusta la ruta de tu imagen
-                                            fit: BoxFit.cover,
-                                          )
-                      : Image.asset(
-                                            height: 100,
-                                            width: 100,
-                                            'assets/icon/quiz/incorrecto.png', // Ajusta la ruta de tu imagen
-                                            fit: BoxFit.cover,
-                                          ),
-
-                SizedBox(height: 50,),
+                passed
+                    ? Image.asset(
+                        height: 110,
+                        width: 110,
+                        'assets/icon/quiz/check3.png', // Ajusta la ruta de tu imagen
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        height: 100,
+                        width: 100,
+                        'assets/icon/quiz/incorrecto.png', // Ajusta la ruta de tu imagen
+                        fit: BoxFit.cover,
+                      ),
+                SizedBox(
+                  height: 50,
+                ),
                 const Text(
                   "¡Quiz finalizado!",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                    "Preguntas correctas: $correctAnswers / $totalQuestions",
+                Text("Preguntas correctas: $correctAnswers / $totalQuestions",
                     style: const TextStyle(fontSize: 18, color: Colors.white)),
-                Text("Porcentaje: ${scorePercentage.toStringAsFixed(2)}%", style: const TextStyle(fontSize: 18, color: Colors.white)),
+                Text("Porcentaje: ${scorePercentage.toStringAsFixed(2)}%",
+                    style: const TextStyle(fontSize: 18, color: Colors.white)),
                 const SizedBox(height: 16),
                 Text(
                   textAlign: TextAlign.center,
@@ -271,7 +282,6 @@ showDialog(
                       ? "¡Felicidades! Has aprobado."
                       : "Se require al menos 80% \n Inténtalo de nuevo",
                   style: TextStyle(
-                    
                     fontSize: 18,
                     color: passed ? Colors.lightGreen : Colors.orangeAccent,
                     fontWeight: FontWeight.bold,

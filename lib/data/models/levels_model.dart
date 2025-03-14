@@ -1,43 +1,43 @@
 class LevelsModel {
   final String userId;
-  int level1;
+  bool level1;
   double calification1;
-  int level2;
+  bool level2;
   double calification2;
-  int level3;
+  bool level3;
   double calification3;
-  int level4;
+  bool level4;
   double calification4;
-  int level5;
+  bool level5;
   double calification5;
-  int level6;
+  bool level6;
   double calification6;
-  int level7;
+  bool level7;
   double calification7;
-  int level8;
+  bool level8;
   double calification8;
-  int level9;
+  bool level9;
   double calification9;
 
   LevelsModel({
     required this.userId,
-    this.level1 = 0,
+    this.level1 = false,
     this.calification1 = 0.0,
-    this.level2 = 0,
+    this.level2 = false,
     this.calification2 = 0.0,
-    this.level3 = 0,
+    this.level3 = false,
     this.calification3 = 0.0,
-    this.level4 = 0,
+    this.level4 = false,
     this.calification4 = 0.0,
-    this.level5 = 0,
+    this.level5 = false,
     this.calification5 = 0.0,
-    this.level6 = 0,
+    this.level6 = false,
     this.calification6 = 0.0,
-    this.level7 = 0,
+    this.level7 = false,
     this.calification7 = 0.0,
-    this.level8 = 0,
+    this.level8 = false,
     this.calification8 = 0.0,
-    this.level9 = 0,
+    this.level9 = false,
     this.calification9 = 0.0,
   });
 
@@ -70,23 +70,23 @@ class LevelsModel {
   factory LevelsModel.fromMap(Map<String, dynamic> map) {
     return LevelsModel(
       userId: map['user_id'],
-      level1: map['level1'] ?? 0,
+      level1: (map['level1'] ?? 0) == 1, // Convertir a bool
       calification1: (map['calification1'] ?? 0.0).toDouble(),
-      level2: map['level2'] ?? 0,
+      level2:  (map['level2'] ?? 0) == 1, // Convertir a bool
       calification2: (map['calification2'] ?? 0.0).toDouble(),
-      level3: map['level3'] ?? 0,
+      level3:  (map['level3'] ?? 0) == 1, // Convertir a bool
       calification3: (map['calification3'] ?? 0.0).toDouble(),
-      level4: map['level4'] ?? 0,
+      level4:  (map['level4'] ?? 0) == 1, // Convertir a bool
       calification4: (map['calification4'] ?? 0.0).toDouble(),
-      level5: map['level5'] ?? 0,
+      level5: (map['level5'] ?? 0) == 1, // Convertir a bool
       calification5: (map['calification5'] ?? 0.0).toDouble(),
-      level6: map['level6'] ?? 0,
+      level6:  (map['level6'] ?? 0) == 1, // Convertir a bool
       calification6: (map['calification6'] ?? 0.0).toDouble(),
-      level7: map['level7'] ?? 0,
+      level7:  (map['level7'] ?? 0) == 1, // Convertir a bool
       calification7: (map['calification7'] ?? 0.0).toDouble(),
-      level8: map['level8'] ?? 0,
+      level8:  (map['level8'] ?? 0) == 1, // Convertir a bool
       calification8: (map['calification8'] ?? 0.0).toDouble(),
-      level9: map['level9'] ?? 0,
+      level9:  (map['level9'] ?? 0) == 1, // Convertir a bool
       calification9: (map['calification9'] ?? 0.0).toDouble(),
     );
   }

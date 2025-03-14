@@ -15,6 +15,7 @@ class LevelsController extends StateNotifier<LevelsModel?> {
 
   /// Recupera los niveles de un usuario y actualiza el estado.
   Future<LevelsModel?> fetchLevels(String userId) async {
+    
     final levels = await _levelsRepository.getLevels(userId);
     state = levels;
     return levels;
@@ -26,9 +27,12 @@ class LevelsController extends StateNotifier<LevelsModel?> {
   Future<int> updateLevel(
     String userId,
     int levelNumber, {
-    required int completion,
+    required bool completion,
     required double calification,
   }) async {
+
+    await _levelsRepository.insertOrInitializeLevels(userId);
+
     final result = await _levelsRepository.updateLevel(
       userId,
       levelNumber,
@@ -38,6 +42,10 @@ class LevelsController extends StateNotifier<LevelsModel?> {
     // Se refresca el estado luego de la actualización.
     await fetchLevels(userId);
     return result;
+  }
+
+  Future<void> insertOrInitializeLevels(String userId) async {
+    await _levelsRepository.insertOrInitializeLevels(userId);   
   }
 
   /// Verifica si un nivel específico está completado para un usuario.

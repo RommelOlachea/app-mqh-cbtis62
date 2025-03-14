@@ -4,15 +4,17 @@ import 'package:mqh_rommel/constants/app_constants.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
 import 'package:mqh_rommel/controllers/levels_controller.dart';
 
-class AlphabetQuizScreen extends ConsumerStatefulWidget {
-  const AlphabetQuizScreen({Key? key}) : super(key: key);
+class NumbersbSquizScreen extends ConsumerStatefulWidget {
+  const NumbersbSquizScreen({Key? key}) : super(key: key);
 
   @override
-  _AlphabetQuizScreenState createState() => _AlphabetQuizScreenState();
+  _NumbersbSquizScreenState createState() => _NumbersbSquizScreenState();
 }
 
-class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
-  final Map<String, String> allLetters = AppConstants().alphabetic;
+class _NumbersbSquizScreenState extends ConsumerState<NumbersbSquizScreen> {
+  final Map<String, String> allNumbers = Map.fromEntries(
+  AppConstants().numbers.entries.skip(10)
+);
 
   late List<_Question> questions;
   int currentQuestionIndex = 0;
@@ -25,9 +27,9 @@ class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
     _generateQuestions();
   }
 
-  /// Genera 10 preguntas aleatorias (o tantas como quieras) a partir de [allLetters].
+  /// Genera 10 preguntas aleatorias (o tantas como quieras) a partir de [allNumbers].
   void _generateQuestions() {
-    final entries = allLetters.entries.toList()..shuffle();
+    final entries = allNumbers.entries.toList()..shuffle();
     // Tomamos 10 (o el total, si hay menos de 10).
     final selected = entries.take(10).toList();
 
@@ -53,7 +55,7 @@ class _AlphabetQuizScreenState extends ConsumerState<AlphabetQuizScreen> {
   /// Retorna [count] letras aleatorias distintas de [except].
   List<String> _getRandomLettersExcept(String except, int count) {
     final allPossibleLetters =
-        allLetters.keys.map(_getLetterFromMedia).toSet().toList();
+        allNumbers.keys.map(_getLetterFromMedia).toSet().toList();
     allPossibleLetters.remove(except);
     allPossibleLetters.shuffle();
     return allPossibleLetters.take(count).toList();
@@ -212,7 +214,7 @@ showDialog(
       // Aquí puedes actualizar el nivel del usuario
       levelsController.updateLevel(
         userId,
-        2,
+        5,
         completion: true,
         calification: scorePercentage,
       );
