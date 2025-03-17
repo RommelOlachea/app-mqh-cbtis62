@@ -13,30 +13,40 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  late TextEditingController _nameController;
+  late TextEditingController _passwordController;
+  late TextEditingController _confirmPasswordController;
+
+  bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
 
   @override
   void initState() {
     super.initState();
+    // Se obtiene el usuario actual para inicializar el campo del nombre.
+    final user = ref.read(authControllerProvider)!;
+    _nameController = TextEditingController(text: user.name);
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     String imageProfile =
         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
-
     String username = ref.watch(authControllerProvider)!.name;
+    String email = ref.read(authControllerProvider)!.email;
 
-
-    // Simulación de experiencia y la experiencia total para el siguiente nivel
-    double currentExp =
-        50; // Experiencia actual (puedes cambiar este valor dinámicamente)
-    double totalExpForNextLevel =
-        100; // Total de experiencia para el siguiente nivel
-
-    // Cálculo del porcentaje de progreso
-    double progress = currentExp / totalExpForNextLevel;
-    
-    
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -44,276 +54,207 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: Container(
-        // Fondo con gradiente
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[900]!, Colors.blueAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: Colors.white,
         child: Column(
           children: [
-            // Contenedor para la imagen.
-            Stack(
-              children: [
-                Container(
-                  height: 300,
-                  color: Colors.white,
+            // Sección superior con la foto de perfil, degradado invertido y bordes redondeados
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+              child: Container(
+                height: 300,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blueAccent, Colors.blue[900]!],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
-                // Imagen con bordes redondeados (foto de perfil)
-                Positioned.fill(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                    child: Center(
-                      // Aseguramos que esté centrado
+                child: Column(
+                  children: [
+                    Center(
                       child: Column(
                         children: [
-                          const SizedBox(height: 70,),
-                          UserAvatarImage(imageProfile: imageProfile, radius : 90, color: Colors.purple, width: 5,),
-                          ]
+                          const SizedBox(height: 70),
+                          Container(
+                            width: 180,
+                            height: 180,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: UserAvatarImage(
+                                    imageProfile: imageProfile,
+                                    radius: 90,
+                                    color: Colors.white,
+                                    width: 5,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 20,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Redirige a la pantalla para cambiar la foto de perfil
+                                      context.push('/profilephoto');
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white54,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.camera_alt,
+                                        size: 26,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-            // Fila debajo de la imagen con nombre y nivel.
-            Container(
-              color: Colors.white, // Fondo blanco para la franja
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Nombre a la izquierda
-                  Text(
-                    username, // Cambia este valor dinámicamente si es necesario
+                    SizedBox(height: 10),
+                    Text(
+                    email,
                     style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  // Nivel a la derecha
-                  const Text(
-                    "Nivel: 5", // Cambia este valor dinámicamente si es necesario
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Barra de progreso de experiencia
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Experiencia:",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  // Barra de progreso
-                  Stack(
-                    children: [
-                      // Barra de fondo
-                      Container(
-                        height: 12,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:
-                              Colors.grey[300], // Color de fondo (lo que falta)
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Barra de progreso (color basado en la experiencia actual)
-                      Container(
-                        height: 12,
-                        width: MediaQuery.of(context).size.width *
-                            progress, // Ancho basado en el porcentaje de progreso
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFBA68C8),
-                              Color(0xFF8E24AA)
-                            ], // Gradiente morado
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      // Indicadores de progreso
-                      Positioned(
-                        left: MediaQuery.of(context).size.width * progress - 5,
-                        top: -3,
-                        child: Container(
-                          width: 16,
-                          height: 16,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: Color(0xFF8E24AA),
-                                width: 3), // Borde morado
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Exp: $currentExp/$totalExpForNextLevel",
-                        style:
-                            const TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      const Text(
-                        "Siguiente nivel",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            // Línea divisoria
-            Divider(
-              thickness: 1,
-              color: Colors.grey[400],
-              indent: 20,
-              endIndent: 20,
-            ),
-            // Usamos Expanded para centrar los botones
+            // Sección inferior que muestra el nombre del usuario
+SizedBox(height: 30,),
+            // Formulario para actualizar datos (omitiendo el campo de correo electrónico)
             Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Botón para editar usuario
-                    Container(
-                      width: 250,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFBA68C8),
-                            Color(0xFF8E24AA)
-                          ], // Gradiente morado
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        // Campo para actualizar el nombre
+                        TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: "Nombre",
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                        ],
-                      ),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          context.push('/preferences');
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Ingrese su nombre";
+                            }
+                            return null;
+                          },
                         ),
-                        label: const Text(
-                          "Preferencias",
-                          style: TextStyle(
-                            color: Colors.white, // Texto blanco
-                            fontSize: 18, // Tamaño del texto
-                            fontWeight: FontWeight.bold,
+                        const SizedBox(height: 20),
+                        // Campo para actualizar la contraseña
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: "Contraseña",
+                            prefixIcon: const Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
+                          obscureText: !_passwordVisible,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Ingrese su contraseña";
+                            }
+                            return null;
+                          },
                         ),
-                      ),
+                        const SizedBox(height: 20),
+                        // Campo para confirmar la contraseña
+                        TextFormField(
+                          controller: _confirmPasswordController,
+                          decoration: InputDecoration(
+                            labelText: "Confirmar Contraseña",
+                            prefixIcon: const Icon(Icons.lock_outline),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _confirmPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _confirmPasswordVisible =
+                                      !_confirmPasswordVisible;
+                                });
+                              },
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          obscureText: !_confirmPasswordVisible,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Confirme su contraseña";
+                            }
+                            if (value != _passwordController.text) {
+                              return "Las contraseñas no coinciden";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 50),
+                        // Botón para actualizar los datos del usuario
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0D47A1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          onPressed: () async{
+                            if (_formKey.currentState!.validate()) {
+                              // Se invoca el método updateUser del authControllerProvider
+                              final result = await ref
+                                  .read(authControllerProvider.notifier)
+                                  .updateUser(
+                                    _nameController.text,
+                                    _passwordController.text,
+                                  );
+                              // Se muestra un Snackbar con el mensaje de resultado
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(result)),
+                              );
+                            }
+                          },
+                          child: const Text("Actualizar Datos", style: TextStyle(color: Colors.white),),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20), // Espacio entre los botones
-                    // Botón para editar foto de perfil
-                    Container(
-                      width: 250,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFBA68C8),
-                            Color(0xFF8E24AA)
-                          ], // Gradiente morado
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: TextButton.icon(
-                        onPressed: () {
-                          context.push('/profilephoto');
-                        },
-                        icon: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          "Editar Foto de Perfil",
-                          style: TextStyle(
-                            color: Colors.white, // Texto blanco
-                            fontSize: 18, // Tamaño del texto
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 250,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFBA68C8),
-                            Color(0xFF8E24AA)
-                          ], // Gradiente morado
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

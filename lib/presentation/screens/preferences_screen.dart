@@ -132,25 +132,31 @@ class _PreferencesScreenState extends ConsumerState<PreferencesScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(width: 15),
-                        GestureDetector(
-                          // onTap: () => _launchURL('https://tiktok.com/@tuCuenta'),
-                          onTap: () => _launchURL('https://tiktok.com'),
-                          child: Image.asset(
-                            'assets/social/tiktok1.png',
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        // const SizedBox(width: 15),
+                        // GestureDetector(
+                        //   // onTap: () => _launchURL('https://tiktok.com/@tuCuenta'),
+                        //   onTap: () => _launchURL('https://tiktok.com'),
+                        //   child: Image.asset(
+                        //     'assets/social/tiktok1.png',
+                        //     width: 50,
+                        //     height: 50,
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
                       ],
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0D47A1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
                       onPressed: () {
                         context.push('/profile');
                       },
-                      child: const Text('Editar Perfil'),
+                      child: const Text('Editar Perfil', style: TextStyle(color: Colors.white),),
                     ),
                   ],
                 ),

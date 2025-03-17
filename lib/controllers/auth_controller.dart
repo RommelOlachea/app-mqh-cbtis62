@@ -103,4 +103,26 @@ class AuthController extends StateNotifier<UserModel?> {
     // Reasigna el mismo estado para que Riverpod lo detecte como un "cambio"
     state = state?.copyWith() ?? state;
   }
+
+  // Nuevo método para actualizar el usuario (solo nombre y contraseña)
+  Future<String> updateUser(String newName, String newPassword) async {
+    if (state == null) return "No hay usuario logueado";
+
+    // Se crea un nuevo modelo de usuario con los datos actualizados.
+    final updatedUser = state!.copyWith(
+      name: newName,
+      password: newPassword,
+    );
+
+    final result = await _authRepository.updateUser(updatedUser);
+
+    // Si la actualización fue exitosa, se actualiza el estado.
+    if (result == 'Actualización exitosa') {
+      state = updatedUser;
+    }
+
+    return result;
+  }
+
+
 }

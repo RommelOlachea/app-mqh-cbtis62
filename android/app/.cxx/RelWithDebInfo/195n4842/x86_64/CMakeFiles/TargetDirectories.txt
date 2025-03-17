@@ -1,0 +1,2 @@
+/Users/rommel/Desktop/Flutter/mqh_cbtis62/android/app/.cxx/RelWithDebInfo/195n4842/x86_64/CMakeFiles/edit_cache.dir
+/Users/rommel/Desktop/Flutter/mqh_cbtis62/android/app/.cxx/RelWithDebInfo/195n4842/x86_64/CMakeFiles/rebuild_cache.dir

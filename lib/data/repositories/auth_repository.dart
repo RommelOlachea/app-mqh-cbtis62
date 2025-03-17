@@ -51,4 +51,28 @@ class AuthRepository {
     }
     return null;
   }
+
+
+// Método para actualizar el usuario (solo nombre y contraseña)
+  Future<String> updateUser(UserModel user) async {
+    final db = await DatabaseHelper().database;
+    
+    // Encriptar la nueva contraseña antes de actualizar
+    final hashedPassword =
+        sha256.convert(utf8.encode(user.password)).toString();
+
+    int resultado = await db.update(
+      'usuarios',
+      {
+        'name': user.name,
+        'password': hashedPassword,
+      },
+      where: 'id = ?',
+      whereArgs: [user.id],
+    );
+
+    return resultado > 0 ? 'Actualización exitosa' : 'Error al actualizar';
+  }
+
+
 }
