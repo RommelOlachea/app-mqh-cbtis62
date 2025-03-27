@@ -25,7 +25,7 @@ class _AlphabeticMemoryGameScreenState
   // Contador de pares encontrados
   int _matchesFound = 0;
   // Cantidad de pares que queremos (10)
-  final int _pairsToPlay = 2;
+  final int _pairsToPlay = 10;
 
   @override
   void initState() {
