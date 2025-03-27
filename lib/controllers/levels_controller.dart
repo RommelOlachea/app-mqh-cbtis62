@@ -52,4 +52,17 @@ class LevelsController extends StateNotifier<LevelsModel?> {
   Future<bool> isLevelCompleted(String userId, int levelNumber) async {
     return await _levelsRepository.isLevelCompleted(userId, levelNumber);
   }
+
+  /// Verifica cuántos niveles ha completado un usuario.
+  Future<int> countCompletedLevels(String userId, int maxLevels) async {
+    int completedLevels = 0;
+    for (int i = 1; i <= maxLevels; i++) {
+      bool isCompleted = await _levelsRepository.isLevelCompleted(userId, i);
+      if (isCompleted) {
+        completedLevels++;
+      }
+    }
+    return completedLevels;
+  }
+
 }

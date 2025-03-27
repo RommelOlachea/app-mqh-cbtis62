@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mqh_rommel/controllers/auth_controller.dart';
+import 'package:mqh_rommel/controllers/levels_controller.dart';
 import 'package:mqh_rommel/presentation/widgets/user_avatar_image.dart';
 import 'package:mqh_rommel/utils/utils_app.dart';
 
@@ -13,9 +14,26 @@ class ProgressScreen extends ConsumerStatefulWidget {
 }
 
 class _ProgressScreenState extends ConsumerState<ProgressScreen> {
+  int level = 0;
+
   @override
   void initState() {
     super.initState();
+    _fetchCompletedLevels();
+  }
+
+  var completedLevels;
+
+  Future<void> _fetchCompletedLevels() async {
+    final user = ref.read(authControllerProvider);
+    if (user != null) {
+      // completedLevels = await ref.read(levelsControllerProvider.notifier).countCompletedLevels(user.id, 10);
+      // completedLevels = completedLevels  ?? 0;
+      completedLevels = 5;
+      setState(() {
+        level = completedLevels;
+      });
+    }
   }
 
   @override
@@ -25,18 +43,8 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
 
     String username = ref.watch(authControllerProvider)!.name;
 
-    // Simulación de experiencia y la experiencia total para el siguiente nivel
-    double currentExp =
-        50; // Experiencia actual (puedes cambiar este valor dinámicamente)
-    double totalExpForNextLevel =
-        100; // Total de experiencia para el siguiente nivel
-
-    // Cálculo del porcentaje de progreso
-    double progress = currentExp / totalExpForNextLevel;
-
     return Scaffold(
       body: Container(
-        // Fondo con gradiente
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.blue[900]!, Colors.blueAccent],
@@ -46,14 +54,12 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
         ),
         child: Column(
           children: [
-            // Contenedor para la imagen.
             Stack(
               children: [
                 Container(
                   height: 300,
                   color: Colors.white,
                 ),
-                // Imagen con bordes redondeados (foto de perfil)
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
@@ -61,11 +67,8 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                       bottomRight: Radius.circular(30),
                     ),
                     child: Center(
-                      // Aseguramos que esté centrado
                       child: Column(children: [
-                        const SizedBox(
-                          height: 70,
-                        ),
+                        const SizedBox(height: 70),
                         UserAvatarImage(
                           imageProfile: imageProfile,
                           radius: 90,
@@ -78,26 +81,23 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                 ),
               ],
             ),
-            // Fila debajo de la imagen con nombre y nivel.
             Container(
-              color: Colors.white, // Fondo blanco para la franja
+              color: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Nombre a la izquierda
                   Text(
-                    username, // Cambia este valor dinámicamente si es necesario
+                    username,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  // Nivel a la derecha
-                  const Text(
-                    "Nivel: 5", // Cambia este valor dinámicamente si es necesario
-                    style: TextStyle(
+                  Text(
+                    "Nivel: $level",
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
                     ),
@@ -105,7 +105,6 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                 ],
               ),
             ),
-            // Barra de progreso de experiencia
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
@@ -121,16 +120,13 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  // Barra de progreso
                   Stack(
                     children: [
-                      // Barra de fondo
                       Container(
                         height: 12,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color:
-                              Colors.grey[300], // Color de fondo (lo que falta)
+                          color: Colors.grey[300],
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: const [
                             BoxShadow(
@@ -141,24 +137,20 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                           ],
                         ),
                       ),
-                      // Barra de progreso (color basado en la experiencia actual)
                       Container(
                         height: 12,
-                        width: MediaQuery.of(context).size.width *
-                            progress, // Ancho basado en el porcentaje de progreso
+                        width:
+                            MediaQuery.of(context).size.width * completedLevels,
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFBA68C8),
-                              Color(0xFF8E24AA)
-                            ], // Gradiente morado
+                            colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)],
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      // Indicadores de progreso
                       Positioned(
-                        left: MediaQuery.of(context).size.width * progress - 5,
+                        left:
+                            MediaQuery.of(context).size.width * completedLevels,
                         top: -3,
                         child: Container(
                           width: 16,
@@ -166,9 +158,8 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
-                            border: Border.all(
-                                color: Color(0xFF8E24AA),
-                                width: 3), // Borde morado
+                            border:
+                                Border.all(color: Color(0xFF8E24AA), width: 3),
                           ),
                         ),
                       ),
@@ -179,7 +170,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Exp: $currentExp/$totalExpForNextLevel",
+                        "Exp: $level",
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),
@@ -192,115 +183,17 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                 ],
               ),
             ),
-            // Línea divisoria
-            Divider(
-              thickness: 1,
-              color: Colors.grey[400],
-              indent: 20,
-              endIndent: 20,
-            ),
-            // Usamos Expanded para centrar los botones
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Botón para editar usuario
-                    Container(
-                      width: 250,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFBA68C8),
-                            Color(0xFF8E24AA)
-                          ], // Gradiente morado
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20), // Espacio entre los botones
-                    // Botón para editar foto de perfil
-                    Container(
-                      width: 250,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFBA68C8),
-                            Color(0xFF8E24AA)
-                          ], // Gradiente morado
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 250,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFBA68C8),
-                            Color(0xFF8E24AA)
-                          ], // Gradiente morado
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(30), // Bordes redondeados
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
-      floatingActionButton: Container(
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            colors: [Colors.purpleAccent, Colors.purple],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: FloatingActionButton(
-          onPressed: () {
-            context.push('/preferences');
-          },
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: const Icon(
-            Icons.settings,
-            color: Colors.white,
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push('/preferences');
+        },
+        backgroundColor: Colors.purple,
+        child: const Icon(
+          Icons.settings,
+          color: Colors.white,
         ),
       ),
     );
