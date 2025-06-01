@@ -14,7 +14,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   @override
   Widget build(BuildContext context) {
     // Se filtra el mapa según la consulta de búsqueda (sin distinción de mayúsculas/minúsculas)
-    final filteredGlossary = AppConstants().glossary.entries.where((entry) {
+    final filteredQuestionWords = AppConstants().questionWords.entries.where((entry) {
       return entry.key.toLowerCase().contains(searchQuery.toLowerCase());
     }).toList();
 
@@ -75,11 +75,11 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               ),
               const SizedBox(height: 8),
               Expanded(
-                child: filteredGlossary.isNotEmpty
+                child: filteredQuestionWords.isNotEmpty
                     ? ListView.builder(
-                        itemCount: filteredGlossary.length,
+                        itemCount: filteredQuestionWords.length,
                         itemBuilder: (context, index) {
-                          final entry = filteredGlossary[index];
+                          final entry = filteredQuestionWords[index];
                           return Card(
                             margin: const EdgeInsets.symmetric(vertical: 3),
                             color: Colors.transparent,

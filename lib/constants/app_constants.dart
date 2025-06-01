@@ -11,7 +11,7 @@ class AppConstants {
     'assets/topics/alphabet/H.jpg' : 'H Con la mano cerrada y los dedos índice y medio bien estirados y unidos, se extiende el dedo pulgar señalando hacia arriba. La palma mira hacia usted.',
     'assets/topics/alphabet/I.jpg' : 'I Con la mano cerrada, el dedo meñique se estira señalando hacia arriba. La palma se pone de lado.',
     'assets/topics/alphabet/J.gif' : 'J Con la mano cerrada, el dedo meñique bien estirado señalando hacia arriba y la palma a un lado dibuja una j en el aire.',
-    // 'assets/topics/alphabet/K.jpg' : 'K Se cierra la mano con los dedos índice, medio y pulgar estirados. La yema del pulgar se pone entre el índice y el medio. Se mueve la muñeca hacia arriba.', //todo: hace falta generar este recurso con kaleb y litzi
+    'assets/topics/alphabet/K.jpg' : 'K Se cierra la mano con los dedos índice, medio y pulgar estirados. La yema del pulgar se pone entre el índice y el medio. Se mueve la muñeca hacia arriba.',
     'assets/topics/alphabet/L.jpg' : 'L Con la mano cerrada y los dedos índice y pulgar estirados, se forma una l. La palma mira al frente.',
     'assets/topics/alphabet/LL.gif' : '',
     'assets/topics/alphabet/M.jpg' : 'M Con la mano cerrada, se ponen los dedos índice, medio y anular sobre el pulgar.',
@@ -21,7 +21,7 @@ class AppConstants {
     'assets/topics/alphabet/P.jpg' : 'P Con la mano cerrada y los dedos índice, medio y pulgar estirados, se pone la yema del pulgar entre el índice y el medio.',
     'assets/topics/alphabet/Q.gif' : 'Q Con la mano cerrada, se ponen los dedos índice y pulgar en posición de garra. La palma mira hacia abajo, y se mueve la muñeca hacia los lados.',
     'assets/topics/alphabet/R.gif' : 'R Con la mano cerrada, se estiran y entrelazan los dedos índice y medio. La palma mira al frente.',
-    'assets/topics/alphabet/RR.gif' : '',
+    // 'assets/topics/alphabet/RR.gif' : '', //todo: hace falta generar el recurso con caleb y litzy
     'assets/topics/alphabet/S.jpg' : 'S Con la mano cerrada, se pone el pulgar sobre los otros dedos. La palma mira al frente.',
     'assets/topics/alphabet/T.jpg' : 'T Con la mano cerrada, el pulgar se pone entre el índice y el medio. La palma mira al frente.',
     'assets/topics/alphabet/U.jpg' : 'U Con la mano cerrada, se estiran los dedos índice y medio unidos. La palma mira al frente.',
@@ -122,6 +122,45 @@ class AppConstants {
     "docente": "enero.gif",
     "compañero": "enero.gif",
     "plaza": "enero.gif",
+  }; 
+
+  final Map<String, String> indications = {
+    "Realiza la actividad en silencio": "23-Lection.gif",
+    "Pon atención a la maestra": "24-Lection.gif",
+    "Saca tus libros": "25-Lection.gif",
+    "Siéntate en tu lugar": "26-Lection.gif",
+    "Escribe mas instruciones": "27-Lection.gif",
+    "Saca lápiz, borrador y sacapuntas": "28-Lection.gif",
+    "Colorea el dibujo": "29-Lection.gif",
+    "Escribe la fecha": "30-Lection.gif",
+    "Guarda tus útiles": "31-Lection.gif",
+    "No digas groserías": "32-Lection.gif",
+    "Sé respetuoso": "33-Lection.gif",
+    "No comer en el salón": "34-Lection.gif",
+    "Hacer equipos": "35-Lection.gif",
+    "Cierra tu libro": "36-Lection.gif",
+    "Responde las preguntas": "37-Lection.gif",
+    "Pregunta a tus compañeros": "38-Lection.gif",
+    "Mira tus respuestas": "39-Lection.gif",
+    "Encierra tus respuestas": "40-Lection.gif",
+    "Enumera tus oraciones": "41-Lection.gif",
+    "Lee las instrucciones": "42-Lection.gif",
+    "Practica con tus compañeros": "43-Lection.gif",
+    "Escribe tu nombre": "44-Lection.gif",
+    "Respeta a tu maestro": "45-Lection.gif",
+    "Responde la actividad": "46-Lection.gif",
+  }; 
+
+  final Map<String, String> questionWords = {
+    "Realiza la actividad en silencio": "como.gif",
+    "Pon atención a la maestra": "cual.gif",
+    "Saca tus libros": "cuando.gif",
+    "Siéntate en tu lugar": "cuanto.gif",
+    "Escribe mas instruciones": "donde.gif",
+    "Saca lápiz, borrador y sacapuntas": "para_que.gif",
+    "Colorea el dibujo": "porque.gif",
+    "Escribe la fecha": "que.gif",
+    "Guarda tus útiles": "quien.gif",
   }; 
 
 

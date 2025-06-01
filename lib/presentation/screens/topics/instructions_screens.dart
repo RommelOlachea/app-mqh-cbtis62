@@ -14,7 +14,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
   @override
   Widget build(BuildContext context) {
     // Se filtra el mapa según la consulta de búsqueda (sin distinción de mayúsculas/minúsculas)
-    final filteredGlossary = AppConstants().glossary.entries.where((entry) {
+    final filteredIndications = AppConstants().indications.entries.where((entry) {
       return entry.key.toLowerCase().contains(searchQuery.toLowerCase());
     }).toList();
 
@@ -75,11 +75,11 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
               ),
               const SizedBox(height: 8),
               Expanded(
-                child: filteredGlossary.isNotEmpty
+                child: filteredIndications.isNotEmpty
                     ? ListView.builder(
-                        itemCount: filteredGlossary.length,
+                        itemCount: filteredIndications.length,
                         itemBuilder: (context, index) {
-                          final entry = filteredGlossary[index];
+                          final entry = filteredIndications[index];
                           return Card(
                             margin: const EdgeInsets.symmetric(vertical: 3),
                             color: Colors.transparent,
