@@ -107,7 +107,7 @@ class AppConstants {
   };  
 
  final Map<String, String> glossary = {
-    "Abstracción": "enero.gif",
+    "Abstraccion": "enero.gif",
     "Algoritmo": "enero.gif",
     "Variable": "enero.gif",
     "Depuración": "enero.gif",
