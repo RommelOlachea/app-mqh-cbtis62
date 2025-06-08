@@ -128,9 +128,10 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                             ),
                                           ),
                                           const SizedBox(height: 12),
-                                          // Suponiendo que entry.value contiene la ruta del GIF
+                                          // entry.value contiene la ruta del GIF
                                           Image.asset(
-                                            'assets/topics/calendar/months/${entry.value}', // Ajusta la ruta de tu imagen
+                                            'assets/topics/indications/${entry.value}', // Ajusta la ruta de tu imagen
+                                            // 'assets/topics/indications/23-Leccion.gif', // Ajusta la ruta de tu imagen
                                             fit: BoxFit.cover,
                                           ),
                                         ],

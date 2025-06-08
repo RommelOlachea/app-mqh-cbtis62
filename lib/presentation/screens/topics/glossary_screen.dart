@@ -130,7 +130,7 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
                                           const SizedBox(height: 12),
                                           // Suponiendo que entry.value contiene la ruta del GIF
                                           Image.asset(
-                                            'assets/topics/calendar/months/${entry.value}', // Ajusta la ruta de tu imagen
+                                            'assets/topics/glossary/${entry.value}', // Ajusta la ruta de tu imagen
                                             fit: BoxFit.cover,
                                           ),
                                         ],

@@ -130,7 +130,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                                           const SizedBox(height: 12),
                                           // Suponiendo que entry.value contiene la ruta del GIF
                                           Image.asset(
-                                            'assets/topics/calendar/months/${entry.value}', // Ajusta la ruta de tu imagen
+                                            'assets/topics/questionWords/${entry.value}', // Ajusta la ruta de tu imagen
                                             fit: BoxFit.cover,
                                           ),
                                         ],

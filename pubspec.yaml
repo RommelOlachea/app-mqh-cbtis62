@@ -75,6 +75,10 @@ flutter:
     - assets/icon/quiz/
     - assets/icon/game/
     - assets/profile/
+    - assets/topics/prepositions/
+    - assets/topics/indications/
+    - assets/topics/questionWords/
+    - assets/topics/glossary/
     - assets/topics/alphabet/
     - assets/topics/numbers/
     - assets/topics/calendar/week/
