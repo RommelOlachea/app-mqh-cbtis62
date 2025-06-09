@@ -48,6 +48,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
     // Escucha reactivamente los cambios:
     final levelsModel = ref.watch(levelsControllerProvider);
     final completedLevels = levelsModel?.completedLevels ?? 0;
+    final experience = levelsModel?.experience ?? 0.0;
 
     return Scaffold(
       body: Container(
@@ -63,7 +64,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
             Stack(
               children: [
                 Container(
-                  height: 300,
+                  height: 280,
                   color: Colors.white,
                 ),
                 Positioned.fill(
@@ -176,18 +177,73 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "Nivel: $completedLevels",
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),
+                      Spacer(),
                       const Text(
-                        "Siguiente nivel",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        "Experiencia: ",
+                        style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
                       ),
+                      Text(
+                        "${experience.toStringAsFixed(1)}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (experience >= 80 && experience <90) ...[
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                      ] else if(experience >=90 && experience <100)...[
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),                      
+                      ],
+                      if (experience == 100) ...[
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                      ],
                     ],
+                  ),
+
+                  const Center(
+                    child: Text(
+                      "¡Sigue avanzando para desbloquear nuevos niveles!",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),                  
+                  ),
+                  Center(
+                    child: Image.asset(
+                      'assets/icon/topics/promocion.png',
+                      height: 180,
+                      width: 180,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
               ),

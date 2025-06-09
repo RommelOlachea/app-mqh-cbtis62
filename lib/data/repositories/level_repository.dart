@@ -23,32 +23,60 @@ class LevelsRepository {
   /// [levelNumber] es el número del nivel a actualizar (1, 2, ..., 9).
   /// [completion] debe ser 1 si el nivel fue completado o 0 en caso contrario.
   /// [calification] es la calificación obtenida en ese nivel.
-  Future<int> updateLevel(
-    String userId,
-    int levelNumber, {
-    required bool completion,
-    required double calification,
-  }) async {
-    final db = await DatabaseHelper().database;
-    // Construir dinámicamente el nombre de las columnas según el nivel.
-    final String levelColumn = 'level$levelNumber';
-    final String calificationColumn = 'calification$levelNumber';
-    
-    // Mapa con los valores actualizados.
-    Map<String, dynamic> updateMap = {
-      levelColumn: completion,
-      calificationColumn: calification,
-      'completedLevels' :  levelNumber,
-    };
+Future<int> updateLevel(
+  String userId,
+  int levelNumber, {
+  required bool completion,
+  required double calification,
+}) async {
+  final db = await DatabaseHelper().database;
+  final String levelColumn = 'level$levelNumber';
+  final String calificationColumn = 'calification$levelNumber';
 
-    // Actualizar el registro correspondiente al usuario.
-    return await db.update(
-      'levels',
-      updateMap,
-      where: 'user_id = ?',
-      whereArgs: [userId],
-    );
+  // 1) Recupera el registro actual de niveles
+  final maps = await db.query(
+    'levels',
+    where: 'user_id = ?',
+    whereArgs: [userId],
+  );
+  if (maps.isEmpty) {
+    // No existe aún, podrías lanzar o inicializar aquí
+    throw Exception('No existe registro de niveles para $userId');
   }
+  final current = maps.first;
+
+  // 2) Suma todas las calificaciones hasta levelNumber,
+  //    usando la nueva calificación para el nivel que estás actualizando
+  double totalCalif = 0.0;
+  for (var i = 1; i <= levelNumber; i++) {
+    if (i == levelNumber) {
+      totalCalif += calification;
+    } else {
+      // Asegúrate de castear a double
+      totalCalif += (current['calification$i'] as num).toDouble();
+    }
+  }
+
+  // 3) Calcula el promedio
+  final double experience = totalCalif / levelNumber;
+
+  // 4) Arma el mapa de actualización incluyendo experience
+  final updateMap = <String, dynamic>{
+    levelColumn: completion ? 1 : 0,
+    calificationColumn: calification,
+    'completedLevels': levelNumber,
+    'experience': experience,
+  };
+
+  // 5) Ejecuta el update
+  return await db.update(
+    'levels',
+    updateMap,
+    where: 'user_id = ?',
+    whereArgs: [userId],
+  );
+}
+
 
   /// Verifica si un nivel específico está completado para un usuario.
   ///
@@ -94,6 +122,9 @@ class LevelsRepository {
         'level7': false, 'calification7': 0.0,
         'level8': false, 'calification8': 0.0,
         'level9': false, 'calification9': 0.0,
+        'level10': false, 'calification10': 0.0,
+        'completedLevels': 0,
+        'experience': 0.0, 
       };
 
       // Insertar el registro en la base de datos

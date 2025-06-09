@@ -63,6 +63,7 @@ await db.execute('''
     level10 INTEGER NOT NULL DEFAULT 0,
     calification10 REAL NOT NULL DEFAULT 0.0,
     completedLevels INTEGER NOT NULL DEFAULT 0,
+    experience DOUBLE NOT NULL DEFAULT 0.0,
     FOREIGN KEY (user_id) REFERENCES usuarios(id)    
   )
 ''');

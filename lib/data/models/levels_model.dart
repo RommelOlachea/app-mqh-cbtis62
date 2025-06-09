@@ -21,31 +21,32 @@ class LevelsModel {
   bool level10;
   double calification10;
   int completedLevels;
+  double experience;
 
-  LevelsModel({
-    required this.userId,
-    this.level1 = false,
-    this.calification1 = 0.0,
-    this.level2 = false,
-    this.calification2 = 0.0,
-    this.level3 = false,
-    this.calification3 = 0.0,
-    this.level4 = false,
-    this.calification4 = 0.0,
-    this.level5 = false,
-    this.calification5 = 0.0,
-    this.level6 = false,
-    this.calification6 = 0.0,
-    this.level7 = false,
-    this.calification7 = 0.0,
-    this.level8 = false,
-    this.calification8 = 0.0,
-    this.level9 = false,
-    this.calification9 = 0.0,
-    this.level10 = false,
-    this.calification10 = 0.0,
-    this.completedLevels = 0
-  });
+  LevelsModel(
+      {required this.userId,
+      this.level1 = false,
+      this.calification1 = 0.0,
+      this.level2 = false,
+      this.calification2 = 0.0,
+      this.level3 = false,
+      this.calification3 = 0.0,
+      this.level4 = false,
+      this.calification4 = 0.0,
+      this.level5 = false,
+      this.calification5 = 0.0,
+      this.level6 = false,
+      this.calification6 = 0.0,
+      this.level7 = false,
+      this.calification7 = 0.0,
+      this.level8 = false,
+      this.calification8 = 0.0,
+      this.level9 = false,
+      this.calification9 = 0.0,
+      this.level10 = false,
+      this.calification10 = 0.0,
+      this.completedLevels = 0,
+      this.experience = 0.0});
 
   // Convierte el objeto a un mapa para insertar o actualizar en la base de datos.
   Map<String, dynamic> toMap() {
@@ -72,6 +73,7 @@ class LevelsModel {
       'level10': level10,
       'calification10': calification10,
       'completedLevels': completedLevels,
+      'experience': experience,
     };
   }
 
@@ -100,6 +102,7 @@ class LevelsModel {
       level10: (map['level10'] ?? 0) == 1, // Convertir a bool
       calification10: (map['calification10'] ?? 0.0).toDouble(),
       completedLevels: map['completedLevels'] ?? 0,
+      experience: (map['experience'] ?? 0.0).toDouble(),
     );
   }
 }
