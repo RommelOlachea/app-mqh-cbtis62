@@ -176,6 +176,13 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
           ),
         ),
       ),
+    floatingActionButton: FloatingActionButton(
+        onPressed: () {          
+          GoRouter.of(context).push('/information');
+        },
+        child: const Icon(Icons.info, color: Colors.blue,),
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }

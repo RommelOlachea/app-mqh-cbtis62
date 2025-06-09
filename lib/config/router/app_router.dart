@@ -3,6 +3,7 @@ import 'package:mqh_rommel/presentation/authenticate/authenticate.dart';
 import 'package:mqh_rommel/presentation/screens/games/alphabetic_memory_game_screen.dart';
 import 'package:mqh_rommel/presentation/screens/games/calendar_memory_game_screen.dart';
 import 'package:mqh_rommel/presentation/screens/games/numbers_memory_game.dart';
+import 'package:mqh_rommel/presentation/screens/information_screen.dart';
 import 'package:mqh_rommel/presentation/screens/profile_photo_screen.dart';
 import 'package:mqh_rommel/presentation/screens/profile_screen.dart';
 import 'package:mqh_rommel/presentation/screens/quizs/alphabetic_quiz_screen.dart';
@@ -197,6 +198,11 @@ final appRouter = GoRouter(
       name: 'prepositionsquiz',      
       path: '/prepositionsquiz',
       builder: (context, state) =>   const PrepositionsSquizScreen(),
+    ),    
+    GoRoute(
+      name: 'information',      
+      path: '/information',
+      builder: (context, state) =>   const InformationScreen(),
     ),    
   ],
 );
