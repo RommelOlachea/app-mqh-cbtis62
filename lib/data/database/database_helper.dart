@@ -60,7 +60,10 @@ await db.execute('''
     calification8 REAL NOT NULL DEFAULT 0.0,
     level9 INTEGER NOT NULL DEFAULT 0,
     calification9 REAL NOT NULL DEFAULT 0.0,
-    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+    level10 INTEGER NOT NULL DEFAULT 0,
+    calification10 REAL NOT NULL DEFAULT 0.0,
+    completedLevels INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)    
   )
 ''');
 

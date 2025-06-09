@@ -33,11 +33,12 @@ class LevelsRepository {
     // Construir dinámicamente el nombre de las columnas según el nivel.
     final String levelColumn = 'level$levelNumber';
     final String calificationColumn = 'calification$levelNumber';
-
+    
     // Mapa con los valores actualizados.
     Map<String, dynamic> updateMap = {
       levelColumn: completion,
       calificationColumn: calification,
+      'completedLevels' :  levelNumber,
     };
 
     // Actualizar el registro correspondiente al usuario.

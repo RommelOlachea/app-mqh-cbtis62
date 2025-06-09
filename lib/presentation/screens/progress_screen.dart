@@ -22,14 +22,17 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
     _fetchCompletedLevels();
   }
 
-  var completedLevels;
-
   Future<void> _fetchCompletedLevels() async {
+    var completedLevels;
     final user = ref.read(authControllerProvider);
     if (user != null) {
-      // completedLevels = await ref.read(levelsControllerProvider.notifier).countCompletedLevels(user.id, 10);
-      // completedLevels = completedLevels  ?? 0;
-      completedLevels = 5;
+      completedLevels = await ref
+          .read(levelsControllerProvider.notifier)
+          .countCompletedLevels(user.id, 10);
+
+      completedLevels = completedLevels ?? 0;
+
+      //completedLevels = 5;
       setState(() {
         level = completedLevels;
       });
@@ -42,6 +45,9 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
         UtilsApp.cleanEmailUsername(ref.watch(authControllerProvider)!.email);
 
     String username = ref.watch(authControllerProvider)!.name;
+    // Escucha reactivamente los cambios:
+    final levelsModel = ref.watch(levelsControllerProvider);
+    final completedLevels = levelsModel?.completedLevels ?? 0;
 
     return Scaffold(
       body: Container(
@@ -85,23 +91,23 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
               color: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     username,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  Text(
-                    "Nivel: $level",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
+                  // Text(
+                  //   "Nivel: $level",
+                  //   style: const TextStyle(
+                  //     fontSize: 20,
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -112,7 +118,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Experiencia:",
+                    "Niveles Completados",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -140,7 +146,10 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                       Container(
                         height: 12,
                         width:
-                            MediaQuery.of(context).size.width * completedLevels,
+
+                            // MediaQuery.of(context).size.width * (completedLevels ?? 0) ,
+                            (MediaQuery.of(context).size.width) *
+                                ((completedLevels ?? 0) / 10),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [Color(0xFFBA68C8), Color(0xFF8E24AA)],
@@ -149,8 +158,8 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                         ),
                       ),
                       Positioned(
-                        left:
-                            MediaQuery.of(context).size.width * completedLevels,
+                        left: MediaQuery.of(context).size.width *
+                            (completedLevels ?? 0),
                         top: -3,
                         child: Container(
                           width: 16,
@@ -170,7 +179,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Exp: $level",
+                        "Nivel: $completedLevels",
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),
