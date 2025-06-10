@@ -151,6 +151,12 @@ class _TopicsScreenState extends ConsumerState<TopicsScreen> {
                     scrollDirection: Axis.horizontal,
                     children: const [
                       _AddCategory(
+                        title: "Saludos y expresiones",
+                         image:'assets/icon/topics/saludos.png',
+                        gradientColors:  [Color(0xFFBA68C8), Color(0xFF8E24AA)],
+                        route: '/greetings',
+                      ),                      
+                      _AddCategory(
                         title: "Indicaciones dentro del salón",
                         image:'assets/icon/topics/indicaciones3.png',
                         gradientColors: [Color(0xFF66BB6A), Color(0xFF43A047)],

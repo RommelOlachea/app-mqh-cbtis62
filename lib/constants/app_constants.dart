@@ -189,6 +189,23 @@ final Map<String, String> prepositions = {
     "Responde la actividad": "46-Leccion.gif",
   }; 
 
+  final Map<String, String> greeting = {
+    "¿Cuál es tu nombre?": "nombre.gif",
+    "¿Comó estas?": "estas.gif",
+    "Sorpresa": "sorpresa.gif",
+    "Por favor": "porfavor.gif",
+    "Disculpa": "disculpa.gif",
+    "Saludar": "saludar.gif",
+    "Mucho gusto": "gusto.gif",
+    "Hola": "hola.gif",
+    "Gracias": "gracias.gif",
+    "Buenos días": "dias.gif",
+    "Buenas tardes": "tardes.gif",
+    "Buenas noches": "noches.gif",
+    "Bienvenido": "bienvenido.gif",
+    "Adiós": "adios.gif",
+  }; 
+
 final Map<String, String> questionWords = {
   "¿Cómo?": "como.gif",
   "¿Cuál?": "cual.gif",
@@ -200,6 +217,5 @@ final Map<String, String> questionWords = {
   "¿Qué?": "que.gif",
   "¿Quién?": "quien.gif", // Corrigiendo también el valor anterior
 };
-
 
 }

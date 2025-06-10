@@ -80,6 +80,7 @@ flutter:
     - assets/topics/questionWords/
     - assets/topics/glossary/
     - assets/topics/alphabet/
+    - assets/topics/greeting/
     - assets/topics/numbers/
     - assets/topics/calendar/week/
     - assets/topics/calendar/months/

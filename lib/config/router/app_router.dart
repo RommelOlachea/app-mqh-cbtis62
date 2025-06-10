@@ -13,6 +13,7 @@ import 'package:mqh_rommel/presentation/screens/quizs/numbersa_squiz_screen.dart
 import 'package:mqh_rommel/presentation/screens/quizs/numbersb_squiz_screen.dart';
 import 'package:mqh_rommel/presentation/screens/quizs/prepositions_quiz_screen.dart';
 import 'package:mqh_rommel/presentation/screens/quizs/vocales_quiz_screen.dart';
+import 'package:mqh_rommel/presentation/screens/topics/greeting_screen.dart';
 import 'package:mqh_rommel/presentation/screens/topics/instructions_screens.dart';
 import 'package:mqh_rommel/presentation/screens/topics/prepositions_screen.dart';
 import 'package:mqh_rommel/presentation/screens/topics/questions_screen.dart';
@@ -203,6 +204,11 @@ final appRouter = GoRouter(
       name: 'information',      
       path: '/information',
       builder: (context, state) =>   const InformationScreen(),
+    ),    
+    GoRoute(
+      name: 'greetings',      
+      path: '/greetings',
+      builder: (context, state) =>   const GreetingScreen(),
     ),    
   ],
 );
